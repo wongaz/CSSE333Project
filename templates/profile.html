@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+</head>
+<body style="font-family: Comic Sans MS; background-color: pink">
+
+<p style="color: red; font-size: 40px"><em>User Profile</em> (⌐■_■)</p>
+<img src="https://scontent.xx.fbcdn.net/v/t1.0-9/16142914_10211988004479035_6822739815403621800_n.jpg?oh=464298df1a7342c421ad350b3493c5c2&oe=598CD142" align = "center" width = 200/>
+	<p>
+        <table align = "left" border="1px">
+            <thead>
+                
+            </thead>
+            <tbody>
+                <tr>
+                    <td bgcolor="#F08080"><strong>Email</strong></td>
+                    <td bgcolor="#FFB6C1">{{email}}</td>     
+                </tr>
+
+                <tr>
+                    <td bgcolor="#FFB6C1"><strong>Academic Status</strong></td>
+                    <td bgcolor="#F08080">{{academic_status}}</td>     
+                </tr>
+                
+                <tr>
+                    <td bgcolor="#F08080"><strong>Major</strong></td>
+                    <td bgcolor="#FFB6C1">{% if major=="" %} Undecided {% else %}{{major}}{% endif %}</td>     
+                </tr>
+                
+              	<tr>
+                    <td bgcolor="#FFB6C1"><strong>GPA</strong></td>
+                    <td bgcolor="#F08080">{{gpa}}</td>     
+                </tr>
+                
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Study Habits</strong></td>
+                    <td bgcolor="#FFB6C1">{{study_habit}}</td>     
+                </tr>
+                
+              	<tr>
+                    <td bgcolor="#FFB6C1"><strong>Alcohol Use</strong></td>
+                    <td bgcolor="#F08080">{% if alc_use %} yes {% else %} no {% endif %}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Cigarette Use</strong></td>
+                    <td bgcolor="#FFB6C1">{% if cig_use %} yes {% else %} no {% endif %}</td>     
+                </tr>
+
+              	<tr>
+                    <td><strong>Vape Use</strong></td>
+                    <td bgcolor="#F08080">{% if vape_use %} yes {% else %} no {% endif %}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Hair Color</strong></td>
+                    <td>{{hair}}</td>     
+                </tr>
+
+              	<tr>
+                    <td><strong>Ethnicity</strong></td>
+                    <td bgcolor="#F08080">{{ethnicity}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Sex</strong></td>
+                    <td bgcolor="#FFB6C1">{{sex}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#FFB6C1"><strong>Height <em>(inches)</em></strong></td>
+                    <td bgcolor="#F08080">{{height}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Weekend Bedtime</strong></td>
+                    <td bgcolor="#FFB6C1">{{week_end_bed}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#FFB6C1"><strong>Weekend Waketime</strong></td>
+                    <td bgcolor="#F08080">{{week_end_wake}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#F08080"><strong>Week Bedtime</strong></td>
+                    <td bgcolor="#FFB6C1">{{week_bed}}</td>     
+                </tr>
+
+              	<tr>
+                    <td bgcolor="#FFB6C1"><strong>Week Waketime</strong></td>
+                    <td bgcolor="#F08080">{{week_wake}}</td>     
+                </tr>
+            </tbody>
+        </table>
+	
+	<button id="setpref" type="button">Set Preferences</button>
+	  <form action = "/Logout" method = "POST">
+               	  <input id="logout" type="submit" value = "log out"/>
+ 	 </form>
+</p>
+<img src="" width = 600/>
+
+</body>
+</html>
+

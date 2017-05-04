@@ -78,6 +78,9 @@ def GetProfile():
     print(data)
     return render_template("profile.html")
 
+@app.route('/Registration',methods=['POST'])
+def Registration():
+    return render_template(preference.html)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

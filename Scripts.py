@@ -94,7 +94,7 @@ def SavePref():
         for record in records:
                 if record[16] != None:
                         major_names.append(record[16])
-	major_names = ", ".join(major_names)
+        major_names = ", ".join(major_names)
         return render_template('profile.html',
                                 email=email,
                                 academic_status=records[0][1],

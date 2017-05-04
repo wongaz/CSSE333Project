@@ -40,7 +40,7 @@ def Authenticate():
                 major_names = []
                 for record in records:
                         if record[16] != None:
-                                major_names.append(record[16])
+				major_names.append(record[16])
                 major_names = ", ".join(major_names)
 
                 return render_template('profile.html',
@@ -81,6 +81,38 @@ def GetProfile():
 @app.route('/Registration',methods=['POST'])
 def Registration():
     return render_template(preference.html)
+
+@app.route('/SetPref', methods = ['POST'])
+def SetPref():
+        return render_template("preference.html")
+
+@app.route('/SavePref', methods = ['POST'])
+def SavePref():
+        cursor.callproc('getProfileInformation',(str('Ldh@redred.com'),))
+        records = cursor.fetchall()
+        major_names = []
+        for record in records:
+                if record[16] != None:
+                        major_names.append(record[16])
+	major_names = ", ".join(major_names)
+        return render_template('profile.html',
+                                email=email,
+                                academic_status=records[0][1],
+                                major=major_names,
+                                gpa=records[0][2],
+                                study_habit=records[0][3],
+                                alc_use=records[0][4],
+                                cig_use=records[0][5],
+                                vape_use=records[0][6],
+                                hair=records[0][7],
+                                ethnicity=records[0][8],
+                                sex=records[0][9],
+                                height=records[0][10],
+                                week_end_bed=str(records[0][11]),
+                                week_end_wake=str(records[0][12]),
+                                week_bed=str(records[0][13]),
+                                week_wake=str(records[0][14]))
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

@@ -51,8 +51,7 @@ def Authenticate():
 			study_habit=records[0][3],
 			alc_use=records[0][4],
 			cig_use=records[0][5],
-	
-		vape_use=records[0][6],
+			vape_use=records[0][6],
 			hair=records[0][7],
 			ethnicity=records[0][8],
 			sex=records[0][9],
@@ -65,42 +64,69 @@ def Authenticate():
 		print("Authentication Failed...")
 		return render_template("FailedLogin.html")
 
-@app.route('/postRegister',methods =['POST'])
+@app.route('/postReg',methods =['POST'])
 def postRegister():
 	print('***************************')	
 	_ac = request.form['acs']
+	print(_ac)
 	_major = request.form['major']
+	print(_major)
 	_ah=request.form['ah']
+	print(_ah)
 	_ch =request.form['ch']
+	print(_ch)
 	_vh = request.form['vh']
+	print(_vh)
 	_gpa = request.form['gpa']
+	print(_gpa)
 	_hc = request.form['hc']
+	print(_hc)
 	_et = request.form['et']
+	print(_et)
 	_sx = request.form['sx']
+	print(_sx)
 	_he = request.form['he']
+	print(_he)
 	#Profile -> P
 	_yemail = request.form['yemail']
+	print(_yemail)
 	_ypass = request.form['ypassword']
+	print(_ypass)
 	_pacs = request.form['pacs']
+	print(_pacs)
 	_pgpa = request.form['pgpa']
+	print(_pgpa)
 	_pm = request.form.getlist('pm')
-        _psh = request.form['psh']
-        _pWeekWake = request.form['pWeekWakeup']
-        _pWeekBed = request.form['pWeekBedtime']
-        _pWeekendWake = request.form['pWeekendWakeup']
-        _pWeekendBed = request.form['pWeekendBedtime']
-        _pah = request.form['pah']
+	print(_pm)
+	_psh = request.form['psh']
+	print(_psh)
+	_pWeekWake = request.form['pWeekWakeup']
+	print(_pWeekWake)
+	_pWeekBed = request.form['pWeekBedtime']
+	print(_pWeekBed)
+	_pWeekendWake = request.form['pWeekendWakeup']
+	print(_pWeekendWake)
+	_pWeekendBed = request.form['pWeekendBedtime']
+	print(_pWeekendBed)
+	_pah = request.form['pah']
+	print(_pah)
 	_pch = request.form['pch']
+	print(_pch)
 	_pvh = request.form['pvh']
+	print(_pvh)
 	_pet = request.form['pet']
+	print(_pet)
 	_psx = request.form['psx']
+	print(_psx)
 	_phe = request.form['phe']
+	print(_phe)
 	_phc = request.form['phc']
-	hashedPass = (hashlib.sha1((yemail+ypass).encode('UTF-8'))).hexdigest()	
+	print(_phc)
+	hashedPass = (hashlib.sha1((_ypass+_yemail).encode('UTF-8'))).hexdigest()	
 	connection = mysql.connect()
-        cursor= connection.cursor()
+	cursor= connection.cursor()
 	cursor.callproc('Registration',
-					_pac,
+					(_pacs,
 					_pgpa,
 					_psh,
 					_pah,
@@ -114,7 +140,7 @@ def postRegister():
 					_pWeekendBed,
 					_pWeekWake,
 					_pWeekBed,
-					_pac
+					_pacs,
 					_gpa,
 					_psh,
 					_ah,
@@ -122,25 +148,32 @@ def postRegister():
 					_vh,
 					_hc,
 					_et,
+					_sx,
 					_he,
-					_pWeekendWake.
+					_pWeekendWake,
 					_pWeekendBed,
 					_pWeekWake,
 					_pWeekBed,
 					_yemail,
-					_hashedPass,)
+					hashedPass,))
+	print("Finished Query")
 	tuples = cursor.fetchmany(2)
-	profileID1 = tuples[0]
-	profileID2 = tuples[1]
-	if(major==1):
-		for k in range(len(_pm)):
-			cursor.callproc('AddMajor',profileID1, _pm[k],)
-			cursor.callproc('AddMajor',profileID2, _pm[k],)
-	else:
-		small = min(profileID1, profileID2)
-		for k in range(len(_pm)):
-			cursor.callproc('AddMajor',small,_pm[k],)	
-					
+	print(str(tuples))
+	profileID1 = tuples[0][0]
+	profileID2 = tuples[1][0]
+	
+	print(profileID1)
+	print(profileID2)
+	if(len(_pm)!=0):
+		if(int(_major)==1):
+			for k in range(len(_pm)):
+				cursor.callproc('addMajor',(profileID1, _pm[k],))
+				cursor.callproc('addMajor',(profileID2, _pm[k],))
+		else:
+			small = min(int(profileID1), int(profileID2))
+			for k in range(len(_pm)):
+				cursor.callproc('addMajor',(small,_pm[k],))	
+	connection.commit()				
 	return render_template('login.html')
 @app.route('/Logout')
 def Logout():
@@ -148,7 +181,7 @@ def Logout():
 
 @app.route('/Registration',methods=['POST'])
 def Registration():
-	return render_template('Reg.html')
+	return render_template('newTempReg.html')
 
 @app.route('/SetPref', methods = ['POST'])
 def SetPref():
@@ -182,7 +215,6 @@ def SavePref():
 	major_names = ", ".join(major_names)
 	return render_template('profile.html',
 		email='Ldh@redred.com',
-
 		academic_status=records[0][1],
 		major=major_names,
 		gpa=records[0][2],

@@ -24,10 +24,10 @@ def hello():
 @app.route('/Authenticate', methods=['POST'])
 def Authenticate():
     print('Authentication Starting')
-    try:
-        emailForm = request.form['Email']
-        password = request.form['Password']
-    except request.encoding_errors:
+    emailForm = request.form['Email']
+    password = request.form['Password']
+
+    if (len(emailForm)==0) or (len(password)==0):    
         return render_template("FailedLogin.html",loginError="Missing Email/Password")
     splitEmail = emailForm.strip().split(' ')
     email = splitEmail[0]

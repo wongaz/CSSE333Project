@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Major Match: Login Failed</title>
+    <title>Major Match: Login</title>
   </head>
   <body style="background-color: pink">
 
   <p style="color: red; font-size: 40px">Major Match</p>
   <p style="color: red; font-size: 30px">A Rose-Hulman Project</p>
-  <p>The content of the title element is displayed in the browser tab, in favorites and in search engine results.</p>
+
   	<p style="color: black; font-size: 40px"> Login Failed</p>
+    <p style="color: black; font-size: 24px">
+        {{loginError}}
+    </p>
 	<form action = "/Authenticate" method = "POST">
           UserID:<br>
           <input type="text" name="Email"><br>
@@ -17,8 +20,9 @@
 
           <input id="login" type="submit" value = "log in"/>
   </form>
-
-
+  <form action="/Registration" method = "POST">
+      <input id = "Sign Up Buttone" type = "submit" value = "Register Now">
+  </form>>
   <img src="http://www.albinoblacksheep.com/flash/960/geeks.jpg" width = 600/>
 
   </body>

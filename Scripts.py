@@ -27,7 +27,7 @@ def Authenticate():
     try:
         emailForm = request.form['Email']
         password = request.form['Password']
-    except:
+    except request.encoding_errors:
         return render_template("FailedLogin.html",loginError="Missing Email/Password")
     splitEmail = emailForm.strip().split(' ')
     email = splitEmail[0]
@@ -36,7 +36,7 @@ def Authenticate():
     cursor.callproc('Authenticate', (email,))
     dbPass = cursor.fetchone()
     hashedPass = (hashlib.sha1((password + email).encode('UTF-8'))).hexdigest()
-    if hashedPass == dbPass[0]:
+    if hashedPass!= None and hashedPass == dbPass[0]:
         print("Authentication Sucessful")
         session['Email'] = emailForm
         # Alex do this VVVV

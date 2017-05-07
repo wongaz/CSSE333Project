@@ -37,7 +37,7 @@ def Authenticate():
     dbPass = cursor.fetchone()
     hashedPass = (hashlib.sha1((password + email).encode('UTF-8'))).hexdigest()
     print(hashedPass)
-    if hashedPass is not None:
+    if dbPass is not None:
         if hashedPass == dbPass[0]:
             print("Authentication Sucessful")
             session['Email'] = emailForm

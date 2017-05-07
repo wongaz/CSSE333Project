@@ -37,18 +37,19 @@ def Authenticate():
     dbPass = cursor.fetchone()
     hashedPass = (hashlib.sha1((password + email).encode('UTF-8'))).hexdigest()
     print(hashedPass)
-    if hashedPass is not None and hashedPass == dbPass[0]:
-        print("Authentication Sucessful")
-        session['Email'] = emailForm
-        # Alex do this VVVV
-        cursor.callproc('getProfileInformation', (str(email),))
-        records = cursor.fetchall()
-        major_names = []
-        for record in records:
-            if record[16] != None:
-                major_names.append(record[16])
-        major_names = ", ".join(major_names)
-        return render_template('profile.html',
+    if hashedPass is not None:
+        if hashedPass == dbPass[0]:
+            print("Authentication Sucessful")
+            session['Email'] = emailForm
+            # Alex do this VVVV
+            cursor.callproc('getProfileInformation', (str(email),))
+            records = cursor.fetchall()
+            major_names = []
+            for record in records:
+                if record[16] != None:
+                    major_names.append(record[16])
+            major_names = ", ".join(major_names)
+            return render_template('profile.html',
                                email=email,
                                academic_status=records[0][1],
                                major=major_names,
@@ -65,9 +66,8 @@ def Authenticate():
                                week_end_wake=str(records[0][12]),
                                week_bed=str(records[0][13]),
                                week_wake=str(records[0][14]))
-    else:
-        print("Authentication Failed...")
-        return render_template("FailedLogin.html",loginError="invalid Email and Password")
+    print("Authentication Failed...")
+    return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
 
 @app.route('/postReg', methods=['POST'])

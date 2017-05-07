@@ -36,7 +36,7 @@ def Authenticate():
     cursor.callproc('Authenticate', (email,))
     dbPass = cursor.fetchone()
     hashedPass = (hashlib.sha1((password + email).encode('UTF-8'))).hexdigest()
-    if hashedPass!= None and hashedPass == dbPass[0]:
+    if type(hashedPass) != None and hashedPass == dbPass[0]:
         print("Authentication Sucessful")
         session['Email'] = emailForm
         # Alex do this VVVV

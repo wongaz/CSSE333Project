@@ -27,7 +27,7 @@ def Authenticate():
     emailForm = request.form['Email']
     password = request.form['Password']
 
-    if (len(emailForm)==0) or (len(password)==0):    
+    if (len(emailForm)==0) or (len(password)==0):
         return render_template("FailedLogin.html",loginError="Missing Email/Password")
     splitEmail = emailForm.strip().split(' ')
     email = splitEmail[0]

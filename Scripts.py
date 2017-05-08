@@ -183,6 +183,7 @@ def postRegister():
 
 @app.route('/Logout')
 def Logout():
+    print("Logout")
     session.pop('Email',None)
     return render_template('login.html')
 

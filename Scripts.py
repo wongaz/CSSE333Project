@@ -1,5 +1,4 @@
 import hashlib
-
 from flask import Flask, render_template, request, session
 from flaskext.mysql import MySQL
 
@@ -22,13 +21,12 @@ def hello():
 
 
 @app.route('/Authenticate', methods=['POST'])
-def Authenticate():
+def authenticate():
     print('Authentication Starting')
-    emailForm = request.form['Email']
-    password = request.form['Password']
-
+    emailForm = str(request.form['Email']).strip()
+    password = str(request.form['Password']).strip()
     if (len(emailForm)==0) or (len(password)==0):
-        return render_template("FailedLogin.html",loginError="Missing Email/Password")
+        return render_template("FailedLogin.html", loginError="Missing Email/Password")
     splitEmail = emailForm.strip().split(' ')
     email = splitEmail[0]
     connection = mysql.connect()
@@ -50,22 +48,23 @@ def Authenticate():
                     major_names.append(record[16])
             major_names = ", ".join(major_names)
             return render_template('profile.html',
-                               email=email,
-                               academic_status=records[0][1],
-                               major=major_names,
-                               gpa=records[0][2],
-                               study_habit=records[0][3],
-                               alc_use=records[0][4],
-                               cig_use=records[0][5],
-                               vape_use=records[0][6],
-                               hair=records[0][7],
-                               ethnicity=records[0][8],
-                               sex=records[0][9],
-                               height=records[0][10],
-                               week_end_bed=str(records[0][11]),
-                               week_end_wake=str(records[0][12]),
-                               week_bed=str(records[0][13]),
-                               week_wake=str(records[0][14]))
+                                   Username=emailForm,
+                                   email=email,
+                                   academic_status=records[0][1],
+                                   major=major_names,
+                                   gpa=records[0][2],
+                                   study_habit=records[0][3],
+                                   alc_use=records[0][4],
+                                   cig_use=records[0][5],
+                                   vape_use=records[0][6],
+                                   hair=records[0][7],
+                                   ethnicity=records[0][8],
+                                   sex=records[0][9],
+                                   height=records[0][10],
+                                   week_end_bed=str(records[0][11]),
+                                   week_end_wake=str(records[0][12]),
+                                   week_bed=str(records[0][13]),
+                                   week_wake=str(records[0][14]))
     print("Authentication Failed...")
     return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
@@ -75,58 +74,58 @@ def postRegister():
     _ac = request.form['acs']
     _major = request.form['major']
     _ah = request.form['ah']
-    print(_ac)
-    print(_major)
-    print(_ah)
     _ch = request.form['ch']
-    print(_ch)
     _vh = request.form['vh']
-    print(_vh)
     _gpa = request.form['gpa']
-    print(_gpa)
     _hc = request.form['hc']
-    print(_hc)
     _et = request.form['et']
-    print(_et)
     _sx = request.form['sx']
-    print(_sx)
     _he = request.form['he']
-    print(_he)
-    # Profile -> P
     _yemail = request.form['yemail']
-    print(_yemail)
     _ypass = request.form['ypassword']
-    print(_ypass)
     _pacs = request.form['pacs']
-    print(_pacs)
     _pgpa = request.form['pgpa']
-    print(_pgpa)
     _pm = request.form.getlist('pm')
-    print(_pm)
     _psh = request.form['psh']
-    print(_psh)
     _pWeekWake = request.form['pWeekWakeup']
-    print(_pWeekWake)
     _pWeekBed = request.form['pWeekBedtime']
-    print(_pWeekBed)
     _pWeekendWake = request.form['pWeekendWakeup']
-    print(_pWeekendWake)
     _pWeekendBed = request.form['pWeekendBedtime']
-    print(_pWeekendBed)
     _pah = request.form['pah']
-    print(_pah)
     _pch = request.form['pch']
-    print(_pch)
     _pvh = request.form['pvh']
-    print(_pvh)
     _pet = request.form['pet']
-    print(_pet)
     _psx = request.form['psx']
-    print(_psx)
-    _phe = request.form['phe']
-    print(_phe)
     _phc = request.form['phc']
-    print(_phc)
+    _phe = request.form['phe']
+    # print(_ac)
+    # print(_major)
+    # print(_ah)
+    # print(_ch)
+    # print(_vh)
+    # print(_gpa)
+    # print(_hc)
+    # print(_et)
+    # print(_sx)
+    # print(_he)
+    # # Profile -> P
+    # print(_yemail)
+    # print(_ypass)
+    # print(_pacs)
+    # print(_pgpa)
+    # print(_pm)
+    # print(_psh)
+    # print(_pWeekWake)
+    # print(_pWeekBed)
+    # print(_pWeekendWake)
+    # print(_pWeekendBed)
+    # print(_pah)
+    # print(_pch)
+    # print(_pvh)
+    # print(_pet)
+    # print(_psx)
+    # print(_phe)
+    # print(_phc)
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()
@@ -184,7 +183,8 @@ def postRegister():
 
 @app.route('/Logout')
 def Logout():
-    return render_template('home')
+    session.pop('Email',None)
+    return render_template('login.html')
 
 @app.route('/Registration', methods=['POST'])
 def Registration():

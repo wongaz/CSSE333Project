@@ -69,6 +69,15 @@ def authenticate():
     return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
 
+
+@app.route('/matches', methods=['GET'])
+def matches():
+    return render_template("matches.html", matches=[
+                                               (2, "Mary Sponge", "spongeWars@gov.edu"),
+                                               (3, "John WashCloth", "washClothSkirmish@uni.eu"),
+                                               (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
+
+
 @app.route('/postReg', methods=['POST'])
 def postRegister():
     _ac = request.form['acs']

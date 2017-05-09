@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title>Matches</title>
+	</head>
+    
+	<body style="font-family: Comic Sans MS; background-color: pink">
+
+		<p style="color: red; font-size: 40px"><em>Matches</em> (⌐■_■)</p>
+
+	<table border="1">
+            <tr>
+               	<th>Name</th>
+                <th>Email</th>
+            </tr>
+		{% for match in matches %}
+            <tr>
+                <td>
+                   <a href="/profile?id={{match[0]}}">
+                    	{{match[1]}}
+                   </a>
+                </td>
+                <td>
+                    {{match[2]}}
+                </td>
+	    </tr>
+		{% endfor %}
+
+         </table>
+
+	</body>
+</html>
+

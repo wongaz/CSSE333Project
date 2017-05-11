@@ -36,7 +36,7 @@ def matchBatch():
     #currentEmail = AllEmails[0]
     currentEmail = "Ldh@redred.com"
     cursor.callproc('getDesiredProfile', (str(currentEmail),))
-    currentProfile=cursor.fetchall()
+    currentProfile = cursor.fetchall()
     print("Here")
     print(currentProfile)
     cursor.callproc('getOtherProfiles', (str(currentEmail),))
@@ -54,6 +54,7 @@ def authenticate():
     password = str(request.form['Password']).strip()
     if (len(emailForm)==0) or (len(password)==0):
         return render_template("FailedLogin.html", loginError="Missing Email/Password")
+
     splitEmail = emailForm.strip().split(' ')
     email = splitEmail[0]
     connection = mysql.connect()
@@ -62,6 +63,7 @@ def authenticate():
     dbPass = cursor.fetchone()
     hashedPass = (hashlib.sha1((password + email).encode('UTF-8'))).hexdigest()
     print(hashedPass)
+
     if dbPass is not None:
         if hashedPass == dbPass[0]:
             print("Authentication Sucessful")

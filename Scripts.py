@@ -40,11 +40,10 @@ def matchbatch():
     currentProfile = cursor.fetchall()
     cursor.callproc('getOtherProfiles', (str(currentEmail),))
     otherProfiles = cursor.fetchall()
-    print(otherProfiles[0])
     tupleProfileList = matching(currentProfile[0], otherProfiles)
     print(currentProfile[0])
     for k in range(len(tupleProfileList)):
-        cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0],))
+        cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
 
     connection.commit()
     return 0

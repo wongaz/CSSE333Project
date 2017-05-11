@@ -34,6 +34,7 @@ def matchbatch():
     AllEmails= cursor.fetchall()
     for j in range(len(AllEmails)):
         currentEmail = AllEmails[j][0]
+        print(currentEmail)
         cursor.callproc('getDesiredProfile', (currentEmail,))
         currentProfile = cursor.fetchall()
         cursor.callproc('getOtherProfiles', (str(currentEmail),))

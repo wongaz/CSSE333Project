@@ -43,7 +43,7 @@ def matchbatch():
     print(otherProfiles[0])
     tupleProfileList = matching(currentProfile[0], otherProfiles)
     for k in range(len(tupleProfileList)):
-       cursor.callproc('addMatch', (tupleProfileList[k].Profile,tupleProfileList[k].score,currentProfile[0]),)
+        cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0],))
 
     connection.commit()
     return 0

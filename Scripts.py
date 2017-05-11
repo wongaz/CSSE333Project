@@ -364,7 +364,7 @@ def matching(DesiredAttributes, AllAttributes):
         print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
 
-    return list
+    return List
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

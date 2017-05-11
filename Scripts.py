@@ -37,6 +37,8 @@ def matchBatch():
     currentEmail = "Ldh@redred.com"
     cursor.callproc('getDesiredProfile', (str(currentEmail),))
     currentProfile=cursor.fetchall()
+    print("Here")
+    print(currentProfile)
     cursor.callproc('getOtherProfiles', (str(currentEmail),))
     otherProfiles = cursor.fetchall()
     tupleProfileList = matching(currentProfile[0], otherProfiles)

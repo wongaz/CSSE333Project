@@ -23,11 +23,11 @@ class Node:
 @app.route('/')
 def hello():
     print("Connected!")
-    matchBatch()
+    matchbatch()
     return render_template("login.html")
 
 
-def matchBatch():
+def matchbatch():
     connection = mysql.connect()
     cursor = connection.cursor()
     #cursor.execute("SELECT email from People")
@@ -48,6 +48,8 @@ def matchBatch():
 
     connection.commit()
     return 0
+
+
 @app.route('/Authenticate', methods=['POST'])
 def authenticate():
     print('Authentication Starting')
@@ -100,12 +102,12 @@ def authenticate():
 
 
 
-@app.route('/matches', methods=['GET'])
-def matches():
-    return render_template("matches.html", matches=[
-                                               (2, "Mary Sponge", "spongeWars@gov.edu"),
-                                               (3, "John WashCloth", "washClothSkirmish@uni.eu"),
-                                               (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
+# @app.route('/matches', methods=['GET'])
+# def matches():
+#     return render_template("matches.html", matches=[
+#                                                (2, "Mary Sponge", "spongeWars@gov.edu"),
+#                                                (3, "John WashCloth", "washClothSkirmish@uni.eu"),
+#                                                (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
 
 
 @app.route('/postReg', methods=['POST'])
@@ -219,11 +221,13 @@ def postRegister():
     connection.commit()
     return render_template('login.html')
 
+
 @app.route('/Logout',methods = ['POST'])
 def Logout():
     print("Logout")
     session.pop('Email',None)
     return render_template('login.html')
+
 
 @app.route('/Registration', methods=['POST'])
 def Registration():

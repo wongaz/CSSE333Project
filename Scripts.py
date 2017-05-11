@@ -30,22 +30,21 @@ def hello():
 def matchbatch():
     connection = mysql.connect()
     cursor = connection.cursor()
-    #cursor.execute("SELECT email from People")
-    #AllEmails= cursor.fetchall()
-    #for k in range(len(AllEmails)):
-    #currentEmail = AllEmails[0]
-    currentEmail = 'Ldh@redred.com'
-    cursor.callproc('getDesiredProfile', (currentEmail,))
+    cursor.execute("SELECT email from People")
+    AllEmails= cursor.fetchall()
+    for k in range(len(AllEmails)):
+        currentEmail = AllEmails[k][0]
+        cursor.callproc('getDesiredProfile', (currentEmail,))
 
-    currentProfile = cursor.fetchall()
-    cursor.callproc('getOtherProfiles', (str(currentEmail),))
-    otherProfiles = cursor.fetchall()
-    tupleProfileList = matching(currentProfile[0], otherProfiles)
-    print(currentProfile[0])
-    for k in range(len(tupleProfileList)):
-        cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
+        currentProfile = cursor.fetchall()
+        cursor.callproc('getOtherProfiles', (str(currentEmail),))
+        otherProfiles = cursor.fetchall()
+        tupleProfileList = matching(currentProfile[0], otherProfiles)
+        print(currentProfile[0])
+        for k in range(len(tupleProfileList)):
+            cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
 
-    connection.commit()
+        connection.commit()
     return 0
 
 

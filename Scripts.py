@@ -361,6 +361,7 @@ def matching(DesiredAttributes, AllAttributes):
             Score += 2
 
         newNode = Node(Attributes[0],Score)
+        print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
 
     return list

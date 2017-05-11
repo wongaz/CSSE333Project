@@ -41,6 +41,7 @@ def matchbatch():
     print("Here")
     print(currentProfile)
     cursor.callproc('getOtherProfiles', (str(currentEmail),))
+    cursor.execute("SELECT * from full_profile")
     otherProfiles = cursor.fetchall()
     print(otherProfiles)
     tupleProfileList = matching(currentProfile[0], otherProfiles)

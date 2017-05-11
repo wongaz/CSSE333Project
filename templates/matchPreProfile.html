@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Profile</title>
+  <title>Match Profile</title>
 </head>
 <body style="font-family: Comic Sans MS; background-color: pink">
 
@@ -99,21 +99,13 @@
             </tbody>
         </table>
 
-    <form action="/viewPreMatches" method="POST">
-        <input id="viewPreMatch" type="submit" value='Potential Matches'>
-    </form>
-
-    <form action="/viewPostMatches" method="POST">
-        <input id="viewPostMatch" type="submit" value='Successful Matches'>
-    </form>
-
-	<form action = "/SetPref" method = "POST">
-		<input id="setpref" type="submit" value = 'Set Preferences'>
-	</form>
-	<form action = "/Logout" method = "POST">
-        	<input id="logout" type="submit" value = "log out"/>
+	<form action = "/accept" method = "POST">
+        	<input id="accept" type="submit" value = "Accept Match"/>
  	</form>
 
+    <form action="/reject" method="POST">
+        <input id="reject" type="submit" value="Reject Match" />
+    </form>
 </p>
 <img src="" width = 600/>
 

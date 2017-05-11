@@ -9,6 +9,7 @@
 		<p style="color: red; font-size: 40px"><em>Matches</em> (⌐■_■)</p>
 
 	<table border="1">
+        {{sessionOwner}}'s Session
             <tr>
                	<th>Name</th>
                 <th>Email</th>
@@ -27,6 +28,10 @@
 		{% endfor %}
 
          </table>
+        <form action="/home" method="POST">
+            
+            <input id="returnHome" type="submit" value="Return Home" />
+        </form>
 
 	</body>
 </html>

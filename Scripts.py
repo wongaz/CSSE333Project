@@ -34,8 +34,9 @@ def matchBatch():
     #AllEmails= cursor.fetchall()
     #for k in range(len(AllEmails)):
     #currentEmail = AllEmails[0]
-    currentEmail = "Ldh@redred.com"
+    currentEmail = 'Ldh@redred.com'
     cursor.callproc('getDesiredProfile', (str(currentEmail),))
+    connection.commit()
     currentProfile = cursor.fetchall()
     print("Here")
     print(currentProfile)

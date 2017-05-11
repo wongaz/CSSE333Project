@@ -41,7 +41,10 @@ def matchbatch():
     print("Here")
     print(currentProfile)
     cursor.callproc('getOtherProfiles', (str(currentEmail),))
+    cursor.fetchall()
+    cursor.fetchall()
     otherProfiles = cursor.fetchall()
+
     tupleProfileList = matching(currentProfile[0], otherProfiles)
     for k in range(len(tupleProfileList)):
        cursor.callproc('addMatch', (tupleProfileList[k].Profile,tupleProfileList[k].Score,currentProfile[0]),)

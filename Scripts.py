@@ -284,8 +284,6 @@ def SavePref():
 
 
 def matching(DesiredAttributes, AllAttributes):
-    print(DesiredAttributes)
-    print(AllAttributes)
     List = []
     DesiredAcademicStatus = DesiredAttributes[1]
     DesiredGPA  = DesiredAttributes[2]

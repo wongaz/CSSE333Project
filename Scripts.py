@@ -37,7 +37,7 @@ def matchbatch():
     currentEmail = 'Ldh@redred.com'
     cursor.callproc('getDesiredProfile', currentEmail,)
     connection.commit()
-    currentProfile = cursor.fetchall():
+    currentProfile = cursor.fetchall()
     print("Here")
     print(currentProfile)
     cursor.callproc('getOtherProfiles', (str(currentEmail),))

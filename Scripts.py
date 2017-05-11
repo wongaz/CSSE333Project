@@ -37,6 +37,7 @@ def matchbatch():
         print(currentEmail)
         cursor.callproc('getDesiredProfile', (currentEmail,))
         currentProfile = cursor.fetchall()
+        print(currentProfile)
         cursor.callproc('getOtherProfiles', (str(currentEmail),))
         otherProfiles = cursor.fetchall()
 

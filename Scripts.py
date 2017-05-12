@@ -31,7 +31,7 @@ def viewPostMatches():
     return render_template("Matches.html",)
 
 
-@app.route('/viewPreMatches', methods=['POST'])
+@app.route('/viewPreMatches', methods=['GET'])
 def viewPreMatches():
     print("Viewing Potential Matches")
     connection = mysql.connect()

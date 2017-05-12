@@ -26,31 +26,14 @@ def hello():
     #matchbatch()
     return render_template("login.html")
 
+@app.route('/viewPostMatches', methods=['POST'])
+def viewPostMatches():
+    print("Viewing Potential Matches")
 
-def matchbatch():
-    connection = mysql.connect()
-    cursor = connection.cursor()
-    cursor.execute("SELECT email from People")
-    AllEmails= cursor.fetchall()
-    for j in range(len(AllEmails)):
-        print (j)
-        currentEmail = AllEmails[j][0]
-        print(currentEmail)
-        cursor.callproc('getDesiredProfile', (currentEmail,))
-        currentProfile = cursor.fetchall()
-        print(currentProfile)
-        if(len(currentProfile)!= 0):
-            cursor.callproc('getOtherProfiles', (str(currentEmail),))
-            otherProfiles = cursor.fetchall()
 
-            tupleProfileList = matching(currentProfile[0], otherProfiles)
-
-            for k in range(len(tupleProfileList)):
-                cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
-
-            connection.commit()
-    print("Done")
-    return 0
+@app.route('/viewPreMatches', methods=['POST'])
+def viewPostMatches():
+    print("Viewing Potential Matches")
 
 
 @app.route('/Authenticate', methods=['POST'])
@@ -221,7 +204,10 @@ def postRegister():
             small = min(int(profileID1), int(profileID2))
             for k in range(len(_pm)):
                 cursor.callproc('addMajor', (small, _pm[k],))
+
     connection.commit()
+    RegistrationMatching(_yemail)
+
     return render_template('login.html')
 
 
@@ -367,8 +353,54 @@ def matching(DesiredAttributes, AllAttributes):
         newNode = Node(Attributes[0], Score)
         #print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
-
     return List
+
+
+def RegistrationMatching(email):
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    currentEmail = email
+    print(currentEmail)
+    cursor.callproc('getDesiredProfile', (currentEmail,))
+    currentProfile = cursor.fetchall()
+    print(currentProfile)
+    if(len(currentProfile)!= 0):
+        cursor.callproc('getOtherProfiles', (str(currentEmail),))
+        otherProfiles = cursor.fetchall()
+
+        tupleProfileList = matching(currentProfile[0], otherProfiles)
+
+        for k in range(len(tupleProfileList)):
+            cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
+
+        connection.commit()
+    print("Done")
+    return 0
+
+def matchbatch():
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.execute("SELECT email from People")
+    AllEmails= cursor.fetchall()
+    for j in range(len(AllEmails)):
+        print (j)
+        currentEmail = AllEmails[j][0]
+        print(currentEmail)
+        cursor.callproc('getDesiredProfile', (currentEmail,))
+        currentProfile = cursor.fetchall()
+        print(currentProfile)
+        if(len(currentProfile)!= 0):
+            cursor.callproc('getOtherProfiles', (str(currentEmail),))
+            otherProfiles = cursor.fetchall()
+
+            tupleProfileList = matching(currentProfile[0], otherProfiles)
+
+            for k in range(len(tupleProfileList)):
+                cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
+
+            connection.commit()
+    print("Done")
+    return 0
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

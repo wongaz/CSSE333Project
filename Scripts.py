@@ -103,9 +103,9 @@ def authenticate():
 @app.route('/matches', methods=['GET'])
 def matches():
     return render_template("matches.html", matches=[
-                                               (2, "Mary Sponge", "spongeWars@gov.edu"),
-                                               (3, "John WashCloth", "washClothSkirmish@uni.eu"),
-                                               (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
+                                               (2, 'Mary Sponge', 'spongeWars@gov.edu'),
+                                               (3, 'John WashCloth', 'washClothSkirmish@uni.eu'),
+                                               (4, 'Sally ScrubBrawl', 'scubBrawlingGirls@fightclub.fight')])
 
 
 @app.route('/postReg', methods=['POST'])

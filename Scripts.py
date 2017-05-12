@@ -14,7 +14,6 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 class Node:
-
     def __init__(self,UserID, Value):
         self.Profile = UserID
         self.score = Value
@@ -23,17 +22,26 @@ class Node:
 @app.route('/')
 def hello():
     print("Connected!")
-    #matchbatch()
     return render_template("login.html")
 
 @app.route('/viewPostMatches', methods=['POST'])
 def viewPostMatches():
     print("Viewing Potential Matches")
 
+    return render_template("Matches.html",)
+
 
 @app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
     print("Viewing Potential Matches")
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    print(email)
+    cursor.callproc('getTopMatches', (email,))
+    Alluser = cursor.fetchall()
+    print(Alluser)
+    return render_template('matches.html',sessionOwner = email,match=Alluser)
 
 
 @app.route('/Authenticate', methods=['POST'])
@@ -354,7 +362,6 @@ def matching(DesiredAttributes, AllAttributes):
         #print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
     return List
-
 
 def RegistrationMatching(email):
     connection = mysql.connect()

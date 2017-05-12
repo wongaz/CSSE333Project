@@ -24,14 +24,14 @@ def hello():
     print("Connected!")
     return render_template("login.html")
 
-@app.route('/viewPostMatches', methods=['POST'])
+@app.route('/viewPostMatches' , methods=['POST'])
 def viewPostMatches():
     print("Viewing Potential Matches")
 
     return render_template("Matches.html",)
 
 
-@app.route('/viewPreMatches', methods=['GET'])
+@app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
     print("Viewing Potential Matches")
     connection = mysql.connect()
@@ -40,9 +40,11 @@ def viewPreMatches():
     print(email)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
+    AllUsers2 = []
     for k in range(len(Alluser)):
         print(Alluser[k])
-    return render_template('matches.html',sessionOwner = email, match = Alluser)
+        AllUsers2.append(Alluser[k])
+    return render_template('matches.html',sessionOwner = email, match = AllUsers2)
 
 
 @app.route('/Authenticate', methods=['POST'])

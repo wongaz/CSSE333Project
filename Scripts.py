@@ -23,7 +23,7 @@ class Node:
 @app.route('/')
 def hello():
     print("Connected!")
-    matchbatch()
+    #matchbatch()
     return render_template("login.html")
 
 
@@ -105,12 +105,12 @@ def authenticate():
 
 
 
-# @app.route('/matches', methods=['GET'])
-# def matches():
-#     return render_template("matches.html", matches=[
-#                                                (2, "Mary Sponge", "spongeWars@gov.edu"),
-#                                                (3, "John WashCloth", "washClothSkirmish@uni.eu"),
-#                                                (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
+@app.route('/matches', methods=['GET'])
+def matches():
+    return render_template("matches.html", matches=[
+                                               (2, "Mary Sponge", "spongeWars@gov.edu"),
+                                               (3, "John WashCloth", "washClothSkirmish@uni.eu"),
+                                               (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
 
 
 @app.route('/postReg', methods=['POST'])
@@ -327,41 +327,41 @@ def matching(DesiredAttributes, AllAttributes):
         OtherMajorID = Attributes[15]
         OtherMajorName = Attributes[16]
         #GPA
-        if(OtherGPA >DesiredGPA):
+        if OtherGPA > DesiredGPA:
             Score+=2
         #StudyHabits
-        if(DesiredSH==OtherSH):
-            Score+=1
+        if DesiredSH == OtherSH:
+            Score += 1
         #Academic
         if DesiredAcademicStatus == OtherAcademicStatus:
-            Score+=2
+            Score += 2
         #Alcohol
-        if(DesiredAU == OtherAU):
-            Score+=1
+        if DesiredAU == OtherAU:
+            Score += 1
         #Cigs
-        if (DesiredCU == OtherCU):
+        if DesiredCU == OtherCU:
             Score += 1
         #Vape
-        if (DesiredVU == OtherVU):
+        if DesiredVU == OtherVU:
             Score += 1
         #Hair Color
-        if (DesiredHC == OtherHC):
+        if DesiredHC == OtherHC:
             Score += 1
         #Ethnicity
-        if (DesiredEth == OtherEth):
+        if DesiredEth == OtherEth:
             Score += 1
         #Height
-        if (DesiredHE < OtherHE):
+        if DesiredHE < OtherHE:
             Score += 1
         #Weekend Intersection
-        if((OtherWeekendSt <= DesiredWeekendSt <= OtherWeekendE ) or (DesiredWeekendSt <= OtherWeekendSt <= DesiredWeekendE)):
+        if(OtherWeekendSt <= DesiredWeekendSt <= OtherWeekendE ) or (DesiredWeekendSt <= OtherWeekendSt <= DesiredWeekendE):
             Score+=4
         #WeekDay Intersection
-        if ((OtherWeekSt <= DesiredWeekSt <= OtherWeekE) or (DesiredWeekSt <= OtherWeekSt <= DesiredWeekE)):
+        if (OtherWeekSt <= DesiredWeekSt <= OtherWeekE) or (DesiredWeekSt <= OtherWeekSt <= DesiredWeekE):
             Score+=6
-        if (DesiredGender == OtherGender):
+        if DesiredGender == OtherGender:
             Score += 2
-        if (DesiredAcademicStatus == OtherAcademicStatus):
+        if DesiredAcademicStatus == OtherAcademicStatus:
             Score += 2
 
         newNode = Node(Attributes[0], Score)

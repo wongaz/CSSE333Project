@@ -38,7 +38,7 @@ def viewPreMatches():
     cursor = connection.cursor()
     email = session['Email']
     print(email)
-    Query = "Select MatcheeID from Matches where email =" + email
+    Query = "Select MatcheeID from Matches where email =" + str(email)
     cursor.execute(Query)
     AlluserID = cursor.fetchall()
     print(AlluserID)

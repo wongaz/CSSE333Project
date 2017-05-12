@@ -32,7 +32,7 @@ def viewPostMatches():
 
 
 @app.route('/viewPreMatches', methods=['POST'])
-def viewPostMatches():
+def viewPreMatches():
     print("Viewing Potential Matches")
 
 

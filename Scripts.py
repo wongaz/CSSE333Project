@@ -40,8 +40,9 @@ def viewPreMatches():
     print(email)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
-    print(Alluser)
-    return render_template('matches.html',sessionOwner = email,match=Alluser)
+    for k in range(len(Alluser)):
+        print(Alluser[k])
+    return render_template('matches.html',sessionOwner = email, match = Alluser)
 
 
 @app.route('/Authenticate', methods=['POST'])

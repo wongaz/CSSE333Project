@@ -11,14 +11,18 @@
 	<table border="1">
         {{sessionOwner}}'s Session
             <tr>
-               	<th>UserID</th>
+               	<th>Name</th>
+                <th>Email</th>
             </tr>
 		{% for match in matches %}
             <tr>
                 <td>
                    <a href="/profile?id={{match[0]}}">
-                    	{{match[0]}}
+                    	{{match[1]}}
                    </a>
+                </td>
+                <td>
+                    {{match[2]}}
                 </td>
 	    </tr>
 		{% endfor %}

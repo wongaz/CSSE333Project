@@ -38,9 +38,8 @@ def viewPreMatches():
     cursor = connection.cursor()
     email = session['Email']
     print(email)
-    Query = "Select MatcheeID from Matches where email =" + str(email)
-    cursor.execute(Query)
-    AlluserID = cursor.fetchall()
+    cursor.callproc('getTopMatches', (email,))
+    Alluser = cursor.fetchall()
     print(AlluserID)
     return render_template("Matches.html",sessionOwner = email,match=AlluserID)
 

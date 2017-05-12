@@ -33,20 +33,23 @@ def matchbatch():
     cursor.execute("SELECT email from People")
     AllEmails= cursor.fetchall()
     for j in range(len(AllEmails)):
+        print (j)
         currentEmail = AllEmails[j][0]
         print(currentEmail)
         cursor.callproc('getDesiredProfile', (currentEmail,))
         currentProfile = cursor.fetchall()
         print(currentProfile)
-        cursor.callproc('getOtherProfiles', (str(currentEmail),))
-        otherProfiles = cursor.fetchall()
+        if(len(currentProfile)!= 0):
+            cursor.callproc('getOtherProfiles', (str(currentEmail),))
+            otherProfiles = cursor.fetchall()
 
-        tupleProfileList = matching(currentProfile[0], otherProfiles)
+            tupleProfileList = matching(currentProfile[0], otherProfiles)
 
-        for k in range(len(tupleProfileList)):
-            cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
+            for k in range(len(tupleProfileList)):
+                cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
 
-        connection.commit()
+            connection.commit()
+    print("Done")
     return 0
 
 
@@ -361,8 +364,8 @@ def matching(DesiredAttributes, AllAttributes):
         if (DesiredAcademicStatus == OtherAcademicStatus):
             Score += 2
 
-        newNode = Node(Attributes[0],Score)
-        print(str(newNode.Profile)+" "+str(newNode.score))
+        newNode = Node(Attributes[0], Score)
+        #print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
 
     return List

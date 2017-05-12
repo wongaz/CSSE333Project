@@ -37,6 +37,7 @@ def viewPreMatches():
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
+    print(email)
     Query = "Select MatcheeID from Matches where email =" + email
     cursor.execute(Query)
     AlluserID = cursor.fetchall()

@@ -45,7 +45,7 @@ def viewPreMatches():
         print(Alluser[k])
         AllUsers2.append(Alluser[k])
     print(AllUsers2)
-    return render_template('matches.html',sessionOwner = email, match = AllUsers2)
+    return render_template('matches.html',sessionOwner = email, matches = AllUsers2)
 
 
 @app.route('/Authenticate', methods=['POST'])

@@ -40,7 +40,7 @@ def viewPreMatches():
     print(email)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
-    print(AlluserID)
+    print(Alluser)
     return render_template("Matches.html",sessionOwner = email,match=AlluserID)
 
 

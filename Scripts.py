@@ -173,7 +173,7 @@ def meet():
     email = session['Email']
     print('In MeetUp')
     print(email)
-    return render_template('meetup.html',
+    return render_template('meetup2.html',
                            sessionOwner = email)
 
 @app.route('/suggestMeet', methods=['POST'])

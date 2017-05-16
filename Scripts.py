@@ -29,7 +29,7 @@ def hello():
 def viewPostMatches():
     print("Viewing Potential Matches")
 
-    return render_template("Matches.html",)
+    return render_template("AcceptedMatches.html",)
 
 @app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
@@ -97,10 +97,44 @@ def authenticate():
     print("Authentication Failed...")
     return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
+@app.route('/profile2', methods=['GET'])
+def viewMatchedProfiles():
+    val = int(request.args.get('id'))
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    cursor.callproc('getTopMatches', (email,))
+    AllMatches = cursor.fetchall()
+    otherEmail = AllMatches[val - 2][2]
+    cursor.callproc('getProfileInformation', (str(otherEmail),))
+    records = cursor.fetchall()
+    session['otherEmail'] = otherEmail
+    major_names = []
+    for record in records:
+        if record[16] != None:
+            major_names.append(record[16])
+    major_names = ", ".join(major_names)
+    return render_template('matchPostProfile.html',
+                           email=otherEmail,
+                           academic_status=records[0][1],
+                           major=major_names,
+                           gpa=records[0][2],
+                           study_habit=records[0][3],
+                           alc_use=records[0][4],
+                           cig_use=records[0][5],
+                           vape_use=records[0][6],
+                           hair=records[0][7],
+                           ethnicity=records[0][8],
+                           sex=records[0][9],
+                           height=records[0][10],
+                           week_end_bed=str(records[0][11]),
+                           week_end_wake=str(records[0][12]),
+                           week_bed=str(records[0][13]),
+                           week_wake=str(records[0][14]))
+
 @app.route('/profile', methods=['GET'])
 def ViewOtherProfile():
     val = int(request.args.get('id'))
-    print(val)
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
@@ -132,6 +166,48 @@ def ViewOtherProfile():
                            week_end_wake=str(records[0][12]),
                            week_bed=str(records[0][13]),
                            week_wake=str(records[0][14]))
+
+@app.route('/accept', methods=['POST'])
+def accept():
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    otherEmail = session['otherEmail']
+    string = 'accept'
+    cursor.callproc('updateMatchStatus',(email,otherEmail,string,))
+    connection.commit()
+    session.pop('otherEmail')
+
+    cursor.callproc('getTopMatches', (email,))
+    Alluser = cursor.fetchall()
+    print(Alluser)
+    AllUsers2 = []
+    for k in range(len(Alluser)):
+        print(Alluser[k])
+        AllUsers2.append(Alluser[k])
+    print(AllUsers2)
+    return render_template('matches.html', sessionOwner=email, matches=AllUsers2)
+
+@app.route('/reject', methods=['POST'])
+def accept():
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    otherEmail = session['otherEmail']
+    string = 'reject'
+    cursor.callproc('updateMatchStatus', (email, otherEmail, string,))
+    connection.commit()
+    session.pop('otherEmail')
+
+    cursor.callproc('getTopMatches', (email,))
+    Alluser = cursor.fetchall()
+    print(Alluser)
+    AllUsers2 = []
+    for k in range(len(Alluser)):
+        print(Alluser[k])
+        AllUsers2.append(Alluser[k])
+    print(AllUsers2)
+    return render_template('matches.html', sessionOwner=email, matches=AllUsers2)
 
 @app.route('/home', methods=['POST'])
 def Home():
@@ -198,7 +274,6 @@ def MessageBox():
                            messages=val
                            )
 
-
 @app.route('/refreshMessages', methods = ['POST'])
 def refreshMessage():
     email = session['Email']
@@ -213,14 +288,36 @@ def refreshMessage():
                            messages = val
                            )
 
-
 @app.route('/returnConversation', methods=['POST'])
 def returnToConversation():
     email = session['Email']
     otherEmail = session['otherEmail']
-    return render_template('conversation.html',
-                           sessionOwner=email,
-                           otherUser = otherEmail,)
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getProfileInformation', (str(otherEmail),))
+    records = cursor.fetchall()
+    major_names = []
+    for record in records:
+        if record[16] != None:
+            major_names.append(record[16])
+    major_names = ", ".join(major_names)
+    return render_template('matchPostProfile.html',
+                           email=otherEmail,
+                           academic_status=records[0][1],
+                           major=major_names,
+                           gpa=records[0][2],
+                           study_habit=records[0][3],
+                           alc_use=records[0][4],
+                           cig_use=records[0][5],
+                           vape_use=records[0][6],
+                           hair=records[0][7],
+                           ethnicity=records[0][8],
+                           sex=records[0][9],
+                           height=records[0][10],
+                           week_end_bed=str(records[0][11]),
+                           week_end_wake=str(records[0][12]),
+                           week_bed=str(records[0][13]),
+                           week_wake=str(records[0][14]))
 
 @app.route('/meetup', methods=['POST'])
 def meet():
@@ -244,7 +341,8 @@ def suggestMeetUp():
     _location = request.form['locationInput']
     _time = request.form['timeInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
-    pass
+    connection.commit()
+
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():

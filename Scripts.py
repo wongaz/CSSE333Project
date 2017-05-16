@@ -1,6 +1,8 @@
 import hashlib
 from flask import Flask, render_template, request, session
 from flaskext.mysql import MySQL
+import datetime
+import time
 
 app = Flask(__name__)
 app.secret_key = 'any random string'
@@ -107,6 +109,7 @@ def ViewOtherProfile():
     otherEmail = AllMatches[val-2][2]
     cursor.callproc('getProfileInformation', (str(otherEmail),))
     records = cursor.fetchall()
+    session['otherEmail'] = otherEmail
     major_names = []
     for record in records:
         if record[16] != None:
@@ -161,12 +164,47 @@ def Home():
                            week_bed=str(records[0][13]),
                            week_wake=str(records[0][14]))
 
+@app.route('/sendMessage', methods=['POST'])
+def sendingMessage():
+    email = session['Email']
+    otherEmail = session['otherEmail']
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    _message = request.form['messageToSend']
+    print(otherEmail)
+    ts = datetime.datetime.fromtimestamp(timestamp=time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    cursor.callproc('createMessage', (str(email),str(otherEmail),_message,str(ts),))
+    connection.commit()
+    return render_template('conversation.html',otherUser = otherEmail,
+                                            sessionOwner=email,
+
+                                            )
+
 @app.route('/message', methods=['POST'])
 def MessageBox():
     email = session['Email']
+    otherEmail = session['otherEmail']
     print(email)
     return render_template('conversation.html',
-                           sessionOwner = email)
+                           sessionOwner = email,
+                            otherUser = otherEmail,
+                            )
+
+@app.route('refreshMessages', method =['POST'])
+def refreshMessage():
+    email = session['Email']
+    otherEmail = session['otherEmail']
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser=otherEmail,)
+
+@app.route('/returnConversation', methods=['POST'])
+def returnToConversation():
+    email = session['Email']
+    otherEmail = session['otherEmail']
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser = otherEmail,)
 
 @app.route('/meetup', methods=['POST'])
 def meet():
@@ -184,18 +222,13 @@ def meet():
 @app.route('/suggestMeet', methods=['POST'])
 def suggestMeetUp():
     email = session['Email']
+    otherEmail = session['otherEmail']
     connection = mysql.connect()
     cursor = connection.cursor()
     _location = request.form['locationInput']
     _time = request.form['timeInput']
+    cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     pass
-
-@app.route('/returnConversation', methods=['POST'])
-def returnToConversation():
-    email = session['Email']
-    print(email)
-    return render_template('conversation.html',
-                           sessionOwner=email,)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():
@@ -208,14 +241,6 @@ def refreshMeetUp():
                            sessionOwner=email,
                            meetUp=val
                            )
-
-
-# @app.route('/matches', methods=['GET'])
-# def matches():
-#     return render_template("matches.html", matches=[
-#                                                (2, 'Mary Sponge', 'spongeWars@gov.edu'),
-#                                                (3, 'John WashCloth', 'washClothSkirmish@uni.eu'),
-#                                                (4, 'Sally ScrubBrawl', 'scubBrawlingGirls@fightclub.fight')])
 
 @app.route('/postReg', methods=['POST'])
 def postRegister():
@@ -247,7 +272,6 @@ def postRegister():
     _psx = request.form['psx']
     _phc = request.form['phc']
     _phe = request.form['phe']
-
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()
@@ -316,7 +340,7 @@ def Logout():
 def Registration():
     return render_template('newTempReg.html')
 
-@app.route('/SetPref', methods=['POST'])
+@app.route('/UpdatePref', methods=['POST'])
 def SetPref():
     return render_template("preference.html")
 

@@ -99,7 +99,7 @@ def authenticate():
 @app.route('/profile', methods=['GET'])
 def ViewOtherProfile():
     val = request.args.get('id')
-    print val
+    print(val)
     return "Hello"
 
 @app.route('/message', methods=['POST'])

@@ -176,14 +176,27 @@ def sendingMessage():
     ts = datetime.datetime.fromtimestamp(timestamp=time.time()).strftime('%Y-%m-%d %H:%M:%S')
     cursor.callproc('createMessage', (str(email),str(otherEmail),_message,str(ts),))
     connection.commit()
-    return refreshMessage
+    cursor.callproc('getMessages', (email, otherEmail,))
+    val = cursor.fetchall()
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser=otherEmail,
+                           messages=val
+                           )
 
 @app.route('/message', methods=['POST'])
 def MessageBox():
     email = session['Email']
     otherEmail = session['otherEmail']
-    print(email)
-    return refreshMessage
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getMessages', (email, otherEmail,))
+    val = cursor.fetchall()
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser=otherEmail,
+                           messages=val
+                           )
 
 
 @app.route('/refreshMessages', methods = ['POST'])

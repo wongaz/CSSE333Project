@@ -24,14 +24,14 @@ def hello():
     print("Connected!")
     return render_template("login.html")
 
-@app.route('/viewPostMatches', methods=['POST'])
+@app.route('/viewPostMatches' , methods=['POST'])
 def viewPostMatches():
     print("Viewing Potential Matches")
 
     return render_template("Matches.html",)
 
 
-@app.route('/viewPreMatches', methods=['GET'])
+@app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
     print("Viewing Potential Matches")
     connection = mysql.connect()
@@ -40,9 +40,12 @@ def viewPreMatches():
     print(email)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
+    AllUsers2 = []
     for k in range(len(Alluser)):
         print(Alluser[k])
-    return render_template('matches.html',sessionOwner = email, match = Alluser)
+        AllUsers2.append(Alluser[k])
+    print(AllUsers2)
+    return render_template('matches.html',sessionOwner = email, matches = AllUsers2)
 
 
 @app.route('/Authenticate', methods=['POST'])
@@ -100,9 +103,9 @@ def authenticate():
 @app.route('/matches', methods=['GET'])
 def matches():
     return render_template("matches.html", matches=[
-                                               (2, "Mary Sponge", "spongeWars@gov.edu"),
-                                               (3, "John WashCloth", "washClothSkirmish@uni.eu"),
-                                               (4, "Sally ScrubBrawl", "scubBrawlingGirls@fightclub.fight")])
+                                               (2, 'Mary Sponge', 'spongeWars@gov.edu'),
+                                               (3, 'John WashCloth', 'washClothSkirmish@uni.eu'),
+                                               (4, 'Sally ScrubBrawl', 'scubBrawlingGirls@fightclub.fight')])
 
 
 @app.route('/postReg', methods=['POST'])

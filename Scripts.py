@@ -164,6 +164,7 @@ def Home():
 @app.route('/message', methods=['POST'])
 def MessageBox():
     email = session['Email']
+    print(email)
     return render_template('conversation.html',
                            sessionOwner = email
                            )

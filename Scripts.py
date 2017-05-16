@@ -186,7 +186,8 @@ def returnToConversation():
     email = session['Email']
     print(email)
     return render_template('conversation.html',
-                           sessionOwner=email
+                           sessionOwner=email,
+                           meetUp = [(),()]
                            )
     pass
 

@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html>
-	<head>
-  		<title>Meetup Proposal</title>
-	</head>
-    
-	<body style="font-family: Comic Sans MS; background-color: pink">
+<head>
+    <title>Meetup Proposal</title>
+</head>
 
-		<p style="color: red; font-size: 40px"><em>Meetup</em> with {{otherPerson}}</p>
+<body style="font-family: Comic Sans MS; background-color: pink">
 
-	<table border="1">
+    <p style="color: red; font-size: 40px"><em>Meetup</em> with {{otherPerson}}</p>
+
+    <table border="1">
         {{sessionOwner}}'s Session
-            <tr>
-               	<th>Location</th>
-                <th>Time</th>
-            </tr>
+        <tr>
+            <th>Location</th>
+            <th>Time</th>
+        </tr>
 
-            <tr>
-                <td>
-                    {{meetUp[0]}}
-                </td>
-                <td>
-                    {{meetUp[1]}}
-                </td>
-	        </tr>
+        <tr>
+            <td>
+                {{meetUp[0]}}
+            </td>
+            <td>
+                {{meetUp[1]}}
+            </td>
+        </tr>
 
 
-         </table>
+    </table>
 
-        <form action="/suggestMeet" method="POST">
-            Location:<br>
-            <input type="text" name="locationInput"><br>
-            Time:<br>
-            <input type="text" name="timeInput"><br>
-            <input id="submitMeet" type="submit" value="Submit Suggestion"/>
-        </form>
-        <p></p>
-        <p></p>
-        <p></p>
+    <form action="/suggestMeet" method="POST">
+        Location:<br>
+        <input type="text" name="locationInput" required><br>
+        Time:<br>
 
-        <form action="/returnConversation" method="POST">
-            
-            <input id="returnConversation" type="submit" value="Return To Conversation" />
-        </form>
+        <input type="datetime-local" name="dayInput" required><br>
 
-        <form action="/refreshMeet" method="POST">
-            <input id="refreshMeet" type="submit" value="Refresh Meetups" />
-        </form>
+        <input id="submitMeet" type="submit" value="Submit Suggestion" />
+    </form>
+    <p></p>
+    <p></p>
+    <p></p>
 
-	</body>
+    <form action="/returnConversation" method="POST">
+
+        <input id="returnConversation" type="submit" value="Return To Conversation" />
+    </form>
+
+    <form action="/refreshMeet" method="POST">
+        <input id="refreshMeet" type="submit" value="Refresh Meetups" />
+    </form>
+
+</body>
 </html>
 

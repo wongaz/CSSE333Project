@@ -1,0 +1,151 @@
+MITER //
+
+CREATE PROCEDURE createMessage(IN senderEmail varchar(50), IN recipientEmail varchar(50), IN msgContents varchar(140), msgTimeStamp datetime)
+BEGIN
+SET @senderUsrID = (SELECT UserID FROM People WHERE email = senderEmail);
+SET @recipientUsrID = (SELECT UserID FROM People WHERE email = recipientEmail);
+INSERT INTO Message(Content, timeStamp)
+VALUES(msgContents, msgTimeStamp);
+SET @newMsgID = (SELECT LAST_INSERTED_ID());
+INSERT INTO Inbox(MessageID, OwnerID)
+VALUES(@newMsgID, @recipientUsrID);
+INSERT INTO Outbox(MessageID, OwnerID)
+VALUES(@newMsgID, @senderUsrID);
+END //
+
+CREATE PROCEDURE getInbox (userEmail varchar(50))
+BEGIN
+SELECT * 
+FROM Inbox JOIN Message ON Inbox.MessageID = Message.MessageID
+WHERE OwnerID = (	SELECT UserID
+			FROM People
+			WHERE email = userEmail)
+LIMIT 100;
+END //
+
+
+CREATE PROCEDURE getOutbox (userEmail varchar(50))
+BEGIN
+SELECT * 
+FROM Outbox JOIN Message ON Outbox.MessageID = Message.MessageID
+WHERE OwnerID = (	SELECT UserID
+			FROM People
+			WHERE email = userEmail)
+LIMIT 100;
+END //
+
+CREATE PROCEDURE setUpMeetUp(meetUpLocation varchar(50), meetUpTime datetime, setUpUserEmail varchar(50), requestedUserEmail varchar(50))
+BEGIN
+SET @setUpUsrID = (	SELECT UserID 
+			FROM People 
+			WHERE email = setUpUserEmail);
+SET @requestedUsrID = (	SELECT UserID 
+			FROM People 
+			WHERE email = requestedUserEmail);
+INSERT INTO MeetUp (Location, timeOfMeetUp, Sponsor)
+VALUES(meetUpLocation, meetUpTime, NULL);
+SET @newMeetUpID = (SELECT LAST_INSERTED_ID());
+INSERT INTO Participation(MeetUpID, UserID)
+VALUES(@newMeetUpID, @senderUsrID);
+INSERT INTO Participation(MeetUpID, UserID)
+VALUES(@newMeetUpID, @requestedUsrID);
+END //
+
+CREATE PROCEDURE getMeetUps(userEmail varchar(50))
+BEGIN
+SELECT * 
+FROM MeetUp JOIN Participation ON MeetUp.MeetUpID = Participation.MeetUpID
+WHERE Participation.UserID = (	SELECT UserID 
+				FROM People 
+				WHERE email = userEmail)
+LIMIT 100;
+END//
+
+DELIMITER ;
+
+DROP PROCEDURE getProfileInformation;
+DROP PROCEDURE updateProfileInformation;
+DROP PROCEDURE Registration;
+
+DELIMITER //
+
+CREATE PROCEDURE Registration(IN AcademicStatusP varchar(10), IN GPAP float, IN StudyHabitsP varchar(140), IN AlcoholUseP tinyint(1), IN CigaretteUseP tinyint(1), IN VapeUseP tinyint(1), IN HairColorP varchar(15), IN EthnicityP varchar(20), IN GenderP varchar(8), IN HeightP int(11), IN WeekendStartTimeP time, IN WeekendEndTimeP time, IN WeekdayStartTimeP time, IN WeekdayEndTimeP time, IN AcademicStatusD varchar(10), IN GPAD float, IN StudyHabitsD varchar(140), IN AlcoholUseD tinyint(1), IN CigaretteUseD tinyint(1), IN VapeUseD tinyint(1), IN HairColorD varchar(15), IN EthnicityD varchar(20), IN GenderD varchar(8), IN HeightD int(11), IN WeekendStartTimeD time, IN WeekendEndTimeD time, IN WeekdayStartTimeD time, IN WeekdayEndTimeD time, IN email varchar(50), IN password varchar(40), regName varchar(32))
+BEGIN
+
+
+INSERT INTO Profile(AcademicStatus, GPA, StudyHabits, AlcoholUse, CigaretteUse, VapeUse, HairColor, Ethnicity, Gender, Height, WeekendStartTime, WeekendEndTime, WeekdayStartTime, WeekdayEndTime)
+VALUES(AcademicStatusP, GPAP, StudyHabitsP, AlcoholUseP, CigaretteUseP, VapeUseP, HairColorP, EthnicityP, GenderP, HeightP, WeekendStartTimeP, WeekendEndTimeP, WeekdayStartTimeP, WeekdayEndTimeP);
+
+
+INSERT INTO Profile(AcademicStatus, GPA, StudyHabits, AlcoholUse, CigaretteUse, VapeUse, HairColor, Ethnicity, Gender, Height, WeekendStartTime, WeekendEndTime, WeekdayStartTime, WeekdayEndTime)
+VALUES(AcademicStatusD, GPAD, StudyHabitsD, AlcoholUseD, CigaretteUseD, VapeUseD, HairColorD, EthnicityD, GenderD, HeightD, WeekendStartTimeD, WeekendEndTimeD, WeekdayStartTimeD, WeekdayEndTimeD);
+
+
+SELECT ProfileID FROM Profile WHERE ProfileID = (SELECT MAX(ProfileID) FROM Profile) LIMIT 1 INTO @DPID;
+SELECT ProfileID FROM Profile WHERE ProfileID = (SELECT MAX(ProfileID)-1 FROM Profile) LIMIT 1 INTO @PPID;
+
+
+
+INSERT INTO People(email, PersonalProfile, DesiredProfile, hashedPassword, regName)
+VALUES(email, @PPID, @DPID, password);
+
+
+SELECT ProfileID FROM Profile WHERE ProfileID = (SELECT MAX(ProfileID) FROM Profile) OR ProfileID = (SELECT MAX(ProfileID)-1 FROM Profile);
+END //
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE majormatch.getProfileInformation TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE majormatch.updateProfileInformation TO 'guest'@'localhost';
+GRANT EXECUTE ON PROCEDURE majormatch.Registration TO 'guest'@'localhost';
+
+DELIMITER //
+
+CREATE PROCEDURE getProfileInformation (userEmail varchar(50))
+BEGIN
+SELECT * 
+FROM full_profile
+WHERE ProfileID = (	SELECT PersonalProfile
+			FROM People
+			WHERE email = userEmail);
+END //
+
+CREATE PROCEDURE updateProfileInformation (userEmail varchar(50), newAcademicStatus varchar(10), newGPA float, newStudyHabits varchar(140), newAlcoholUse tinyint(1), newCigaretteUse tinyint(1), newVapUse tinyint(1), newHairColor varchar(15), newEthnicity varchar(20), newGender varchar(8), newHeight int(11), newWeekendStartTime time, newWeekendEndTime time, newWeekdayStartTime time, newWeekdayEndTime time)
+BEGIN
+UPDATE Profile 
+SET AcademicStatus = newAcademicStatus, GPA = newGPA, StudyHabits = newStudyHabits, AlcoholUse = newAlcoholUse, CigaretteUse = newCigaretteUse, VapeUse = newVapUse, HairColor = newHairColor, Ethnicity = newEthnicity, Gender = newGender, Height = newHeight, WeekendStartTime = newWeekendStartTime, WeekendEndTime = newWeekendEndTime, WeekdayStartTime = newWeekdayStartTime, WeekdayEndTime = newWeekdayEndTime
+WHERE ProfileID = (SELECT DesiredProfile FROM People WHERE email = userEmail);
+END //
+
+
+CREATE VIEW full_profile AS
+SELECT 	Profile.ProfileID AS ProfileID,
+ 	Profile.AcademicStatus AS AcademicStatus,
+	Profile.GPA AS GPA,
+	Profile.StudyHabits AS StudyHabits,
+	Profile.AlcoholUse AS AlcoholUse,
+	Profile.CigaretteUse AS CigaretteUse,
+	Profile.VapeUse AS VapeUse,
+	Profile.HairColor AS HairColor,
+	Profile.Ethnicity AS Ethnicity,
+	Profile.Gender AS Gender,
+	Profile.Height AS Height,
+	Profile.WeekendStartTime AS WeekendStartTime,
+	Profile.WeekendEndTime AS WeekendEndTime,
+	Profile.WeekdayStartTime AS WeekdayStartTime,
+	Profile.WeekdayEndTime AS WeekdayEndTime,
+	Major.MajorID AS MajorID,
+	Major.MajorName as MajorName,
+	People.Name AS Name
+FROM ((Profile LEFT JOIN Major ON (Major.ProfileID = Profile.ProfileID)) JOIN People ON People.PersonalProfile = Profile.ProfileID);
+
+
+DELIMITER //
+CREATE PROCEDURE updateMatchStatus (userEmail varchar(50), newStatus varchar(7))
+BEGIN
+UPDATE Matches
+SET Status = newStatus
+WHERE UserID = (SELECT UserID FROM People WHERE email = userEmail);
+END //
+DELIMITER ;
+GRANT EXECUTE ON PROCEDURE majormatch.getProfileInformation TO 'guest'@'localhost';
+

@@ -358,6 +358,12 @@ def suggestMeetUp():
     _time = request.form['timeInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
+    cursor.callproc('getMessages', (email, otherEmail,))
+    val = cursor.fetchall()
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser=otherEmail,
+                           messages=val)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():

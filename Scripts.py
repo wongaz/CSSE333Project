@@ -272,7 +272,7 @@ def postRegister():
     _he = request.form['he']
     _yemail = request.form['yemail']
     _ypass = request.form['ypassword']
-    _name = request.form['name']
+    _name = request.form['fname']
     _pacs = request.form['pacs']
     _pgpa = request.form['pgpa']
     _pm = request.form.getlist('pm')
@@ -288,6 +288,10 @@ def postRegister():
     _psx = request.form['psx']
     _phc = request.form['phc']
     _phe = request.form['phe']
+    print(_ac)
+    print(_major)
+    print(_ah)
+
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()

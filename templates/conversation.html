@@ -13,6 +13,7 @@
             <tr>
                	<th>Sender</th>
                 <th>Message</th>
+                <th>Time Stamp</th>
             </tr>
 		{% for message in messages %}
             <tr>
@@ -21,6 +22,9 @@
                 </td>
                 <td>
                     {{message[1]}}
+                </td>
+                <td>
+                    {{message[2]}}
                 </td>
 	        </tr>
 		{% endfor %}

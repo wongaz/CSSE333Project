@@ -115,7 +115,7 @@ def ViewOtherProfile():
         if record[16] != None:
             major_names.append(record[16])
     major_names = ", ".join(major_names)
-    return render_template('matchPostProfile.html',
+    return render_template('matchPreProfile.html',
                            email=otherEmail,
                            academic_status=records[0][1],
                            major=major_names,

@@ -28,8 +28,18 @@ def hello():
 @app.route('/viewPostMatches' , methods=['POST'])
 def viewPostMatches():
     print("Viewing Potential Matches")
-
-    return render_template("AcceptedMatches.html",)
+    email = session['Email']
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getSuccessfulMatches', (email,))
+    Alluser = cursor.fetchall()
+    AllUsers2 = []
+    for k in range(len(Alluser)):
+        print(Alluser[k])
+        AllUsers2.append(Alluser[k])
+    print(AllUsers2)
+    return render_template("acceptedMatches.html",sessionOwner = email,
+                                                acceptedMatches = AllUsers2)
 
 @app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
@@ -103,9 +113,13 @@ def viewMatchedProfiles():
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
-    cursor.callproc('getTopMatches', (email,))
+    cursor.callproc('getSuccessfulMatches', (email,))
     AllMatches = cursor.fetchall()
-    otherEmail = AllMatches[val - 2][2]
+    otherEmail = ""
+    for k in range(len(AllMatches)):
+        cProfile = AllMatches[k]
+        if (val == cProfile[0]):
+            otherEmail = cProfile[2]
     cursor.callproc('getProfileInformation', (str(otherEmail),))
     records = cursor.fetchall()
     session['otherEmail'] = otherEmail
@@ -140,7 +154,11 @@ def ViewOtherProfile():
     email = session['Email']
     cursor.callproc('getTopMatches', (email,))
     AllMatches = cursor.fetchall()
-    otherEmail = AllMatches[val-2][2]
+    otherEmail = ""
+    for k in range(len(AllMatches)):
+        cProfile = AllMatches[k]
+        if(val == cProfile[0]):
+            otherEmail = cProfile[2]
     cursor.callproc('getProfileInformation', (str(otherEmail),))
     records = cursor.fetchall()
     session['otherEmail'] = otherEmail
@@ -173,11 +191,10 @@ def accept():
     cursor = connection.cursor()
     email = session['Email']
     otherEmail = session['otherEmail']
-    string = 'accept'
+    string = 'approve'
     cursor.callproc('updateMatchStatus',(email,otherEmail,string,))
     connection.commit()
     session.pop('otherEmail')
-
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
     print(Alluser)
@@ -189,7 +206,7 @@ def accept():
     return render_template('matches.html', sessionOwner=email, matches=AllUsers2)
 
 @app.route('/reject', methods=['POST'])
-def accept():
+def reject():
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
@@ -197,8 +214,7 @@ def accept():
     string = 'reject'
     cursor.callproc('updateMatchStatus', (email, otherEmail, string,))
     connection.commit()
-    session.pop('otherEmail')
-
+    session.pop('otherEmail',None)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
     print(Alluser)
@@ -342,7 +358,12 @@ def suggestMeetUp():
     _time = request.form['timeInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
-
+    cursor.callproc('getMessages', (email, otherEmail,))
+    val = cursor.fetchall()
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           otherUser=otherEmail,
+                           messages=val)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():

@@ -115,7 +115,11 @@ def viewMatchedProfiles():
     email = session['Email']
     cursor.callproc('getTopMatches', (email,))
     AllMatches = cursor.fetchall()
-    otherEmail = AllMatches[val - 2][2]
+    otherEmail = ""
+    for k in range(len(AllMatches)):
+        cProfile = AllMatches[k]
+        if (val == cProfile[0]):
+            otherEmail = cProfile[2]
     cursor.callproc('getProfileInformation', (str(otherEmail),))
     records = cursor.fetchall()
     session['otherEmail'] = otherEmail
@@ -150,7 +154,11 @@ def ViewOtherProfile():
     email = session['Email']
     cursor.callproc('getTopMatches', (email,))
     AllMatches = cursor.fetchall()
-    otherEmail = AllMatches[val-2][2]
+    otherEmail = ""
+    for k in range(len(AllMatches)):
+        cProfile = AllMatches[k]
+        if(val == cProfile[0]):
+            otherEmail = cProfile[2]
     cursor.callproc('getProfileInformation', (str(otherEmail),))
     records = cursor.fetchall()
     session['otherEmail'] = otherEmail
@@ -187,7 +195,6 @@ def accept():
     cursor.callproc('updateMatchStatus',(email,otherEmail,string,))
     connection.commit()
     session.pop('otherEmail')
-
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
     print(Alluser)
@@ -351,7 +358,6 @@ def suggestMeetUp():
     _time = request.form['timeInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
-
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():

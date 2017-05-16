@@ -28,8 +28,18 @@ def hello():
 @app.route('/viewPostMatches' , methods=['POST'])
 def viewPostMatches():
     print("Viewing Potential Matches")
-
-    return render_template("AcceptedMatches.html",)
+    email = session['Email']
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getSuccessfulMatches', (email,))
+    Alluser = cursor.fetchall()
+    AllUsers2 = []
+    for k in range(len(Alluser)):
+        print(Alluser[k])
+        AllUsers2.append(Alluser[k])
+    print(AllUsers2)
+    return render_template("acceptedMatches.html",sessionOwner = email,
+                                                acceptedMatches = AllUsers2)
 
 @app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():

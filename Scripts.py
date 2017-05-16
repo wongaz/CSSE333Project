@@ -30,7 +30,6 @@ def viewPostMatches():
 
     return render_template("Matches.html",)
 
-
 @app.route('/viewPreMatches', methods=['POST'])
 def viewPreMatches():
     print("Viewing Potential Matches")
@@ -46,7 +45,6 @@ def viewPreMatches():
         AllUsers2.append(Alluser[k])
     print(AllUsers2)
     return render_template('matches.html',sessionOwner = email, matches = AllUsers2)
-
 
 @app.route('/Authenticate', methods=['POST'])
 def authenticate():
@@ -98,15 +96,36 @@ def authenticate():
     print("Authentication Failed...")
     return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
+@app.route('/profile?', methods=['POST'])
+def ViewOtherProfile():
+    return "Hello"
 
+@app.route('/message', methods=['POST'])
+def MessageBox():
+    pass
 
-@app.route('/matches', methods=['GET'])
-def matches():
-    return render_template("matches.html", matches=[
-                                               (2, 'Mary Sponge', 'spongeWars@gov.edu'),
-                                               (3, 'John WashCloth', 'washClothSkirmish@uni.eu'),
-                                               (4, 'Sally ScrubBrawl', 'scubBrawlingGirls@fightclub.fight')])
+@app.route('/meetup',methods=['POST'])
+def meetUp():
+    pass
 
+@app.route('/suggestMeet', methods=['POST'])
+def suggestMeetUp():
+    pass
+
+@app.route('/returnConversation', methods=['POST'])
+def returnToConversation():
+    pass
+
+@app.route('/refreshMeet', methods=['POST'])
+def refreshMeetUp():
+    pass
+
+# @app.route('/matches', methods=['GET'])
+# def matches():
+#     return render_template("matches.html", matches=[
+#                                                (2, 'Mary Sponge', 'spongeWars@gov.edu'),
+#                                                (3, 'John WashCloth', 'washClothSkirmish@uni.eu'),
+#                                                (4, 'Sally ScrubBrawl', 'scubBrawlingGirls@fightclub.fight')])
 
 @app.route('/postReg', methods=['POST'])
 def postRegister():
@@ -222,23 +241,19 @@ def postRegister():
 
     return render_template('login.html')
 
-
 @app.route('/Logout',methods = ['POST'])
 def Logout():
     print("Logout")
     session.pop('Email',None)
     return render_template('login.html')
 
-
 @app.route('/Registration', methods=['POST'])
 def Registration():
     return render_template('newTempReg.html')
 
-
 @app.route('/SetPref', methods=['POST'])
 def SetPref():
     return render_template("preference.html")
-
 
 @app.route('/SavePref', methods=['POST'])
 def SavePref():
@@ -283,7 +298,6 @@ def SavePref():
                            week_end_wake=str(records[0][12]),
                            week_bed=str(records[0][13]),
                            week_wake=str(records[0][14]))
-
 
 def matching(DesiredAttributes, AllAttributes):
     List = []
@@ -361,7 +375,6 @@ def matching(DesiredAttributes, AllAttributes):
             Score += 2
         if DesiredAcademicStatus == OtherAcademicStatus:
             Score += 2
-
         newNode = Node(Attributes[0], Score)
         #print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
@@ -407,7 +420,8 @@ def matchbatch():
             tupleProfileList = matching(currentProfile[0], otherProfiles)
 
             for k in range(len(tupleProfileList)):
-                cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score, currentProfile[0][0],))
+                cursor.callproc('addMatch', (tupleProfileList[k].Profile, tupleProfileList[k].score,
+                                             currentProfile[0][0],))
 
             connection.commit()
     print("Done")

@@ -96,7 +96,7 @@ def authenticate():
     print("Authentication Failed...")
     return render_template("FailedLogin.html",loginError="invalid Email and Password")
 
-@app.route('/profile?', methods=['POST'])
+@app.route('/profile?', methods=['GET'])
 def ViewOtherProfile():
     return "Hello"
 

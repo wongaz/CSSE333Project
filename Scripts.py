@@ -355,7 +355,7 @@ def suggestMeetUp():
     connection = mysql.connect()
     cursor = connection.cursor()
     _location = request.form['locationInput']
-    _time = request.form['timeInput']
+    _time = request.form['dayInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
     cursor.callproc('getMessages', (email, otherEmail,))

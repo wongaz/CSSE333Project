@@ -173,7 +173,7 @@ def accept():
     cursor = connection.cursor()
     email = session['Email']
     otherEmail = session['otherEmail']
-    string = 'accept'
+    string = 'approve'
     cursor.callproc('updateMatchStatus',(email,otherEmail,string,))
     connection.commit()
     session.pop('otherEmail')
@@ -189,7 +189,7 @@ def accept():
     return render_template('matches.html', sessionOwner=email, matches=AllUsers2)
 
 @app.route('/reject', methods=['POST'])
-def accept():
+def reject():
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
@@ -197,8 +197,7 @@ def accept():
     string = 'reject'
     cursor.callproc('updateMatchStatus', (email, otherEmail, string,))
     connection.commit()
-    session.pop('otherEmail')
-
+    session.pop('otherEmail',None)
     cursor.callproc('getTopMatches', (email,))
     Alluser = cursor.fetchall()
     print(Alluser)

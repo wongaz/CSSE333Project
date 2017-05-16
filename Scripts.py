@@ -291,7 +291,10 @@ def postRegister():
     print(_ac)
     print(_major)
     print(_ah)
-
+    print(_ch)
+    print(_vh)
+    print(_gpa)
+    print(_vh)
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()
@@ -485,7 +488,7 @@ def matching(DesiredAttributes, AllAttributes):
         if DesiredAcademicStatus == OtherAcademicStatus:
             Score += 2
         newNode = Node(Attributes[0], Score)
-        #print(str(newNode.Profile)+" "+str(newNode.score))
+        print(str(newNode.Profile)+" "+str(newNode.score))
         List.append(newNode)
     return List
 

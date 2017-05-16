@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title>Meetup Proposal</title>
+	</head>
+    
+	<body style="font-family: Comic Sans MS; background-color: pink">
+
+		<p style="color: red; font-size: 40px"><em>Meetup</em> (⌐■_■)</p>
+
+	<table border="1">
+        {{sessionOwner}}'s Session
+            <tr>
+               	<th>Location</th>
+                <th>Time</th>
+            </tr>
+
+            <tr>
+                <td>
+                    {{meetUp[0]}}
+                </td>
+                <td>
+                    {{meetUp[1]}}
+                </td>
+	        </tr>
+
+
+         </table>
+
+        <form action="/suggestMeet" method="POST">
+            Location:<br>
+            <input type="text" name="locationInput"><br>
+            Time:<br>
+            <input type="text" name="timeInput"><br>
+            <input id="submitMeet" type="submit" value="Submit Suggestion"/>
+        </form>
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <form action="/returnConversation" method="POST">
+            
+            <input id="returnConversation" type="submit" value="Return To Conversation" />
+        </form>
+
+        <form action="/refreshMeet" method="POST">
+            <input id="refreshMeet" type="submit" value="Refresh Meetups" />
+        </form>
+
+	</body>
+</html>
+

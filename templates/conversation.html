@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title>Conversation</title>
+	</head>
+    
+	<body style="font-family: Comic Sans MS; background-color: pink">
+
+		<p style="color: red; font-size: 40px"><em>Conversation</em> (⌐■_■)</p>
+
+	<table border="1">
+        {{sessionOwner}}'s Session
+            <tr>
+               	<th>Sender</th>
+                <th>Message</th>
+            </tr>
+		{% for message in messages %}
+            <tr>
+                <td>
+                    {{message[0]}}
+                </td>
+                <td>
+                    {{message[1]}}
+                </td>
+	        </tr>
+		{% endfor %}
+
+         </table>
+
+        <form action="/sendMessage" method="POST">
+            Message:<br>
+            <input type="text" name="messageToSend"><br>
+            <input id="submitMessage" type="submit" value="Send Message"/>
+        </form>
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <form action="/meetup" method="POST">
+            <input id="goToMeetups" type="submit" value="Look at Meetup Suggestion" />
+        </form>
+
+        <form action="/returnInbox" method="POST">
+            
+            <input id="returnInbox" type="submit" value="Return To Inbox" />
+        </form>
+
+        <form action="/refreshMessages" method="POST">
+            <input id="refreshMessages" type="submit" value="Refresh Messages" />
+        </form>
+
+	</body>
+</html>
+

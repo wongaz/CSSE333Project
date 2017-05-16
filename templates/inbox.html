@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<title>Inbox</title>
+	</head>
+    
+	<body style="font-family: Comic Sans MS; background-color: pink">
+
+		<p style="color: red; font-size: 40px"><em>Inbox</em> (⌐■_■)</p>
+
+	<table border="1">
+        {{sessionOwner}}'s Session
+            <tr>
+               	<th>Name</th>
+                <th>Email</th>
+            </tr>
+		{% for conversation in conversations %}
+            <tr>
+                <td>
+                   <a href="/profile?id={{conversation[0]}}">
+                    	{{conversation[1]}}
+                   </a>
+                </td>
+                <td>
+                    {{conversation[2]}}
+                </td>
+	    </tr>
+		{% endfor %}
+
+         </table>
+        <form action="/home" method="POST">
+            
+            <input id="returnHome" type="submit" value="Return Home" />
+        </form>
+
+        <form action="/refresh" method="POST">
+            <input id="refresh" type="submit" value="Refresh" />
+        </form>
+
+	</body>
+</html>
+

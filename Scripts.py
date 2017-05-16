@@ -98,9 +98,40 @@ def authenticate():
 
 @app.route('/profile', methods=['GET'])
 def ViewOtherProfile():
-    val = request.args.get('id')
+    val = int(request.args.get('id'))
     print(val)
-    return "Hello"
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    cursor.callproc('getTopMatches', (email,))
+    AllMatches = cursor.fetchall()
+    otherEmail = AllMatches[val-2][2]
+    cursor.callproc('getProfileInformation', (str(otherEmail),))
+    records = cursor.fetchall()
+    major_names = []
+    for record in records:
+        if record[16] != None:
+            major_names.append(record[16])
+    major_names = ", ".join(major_names)
+    return render_template('matchPostProfile.html',
+                           Username=otherEmail,
+                           email=email,
+                           academic_status=records[0][1],
+                           major=major_names,
+                           gpa=records[0][2],
+                           study_habit=records[0][3],
+                           alc_use=records[0][4],
+                           cig_use=records[0][5],
+                           vape_use=records[0][6],
+                           hair=records[0][7],
+                           ethnicity=records[0][8],
+                           sex=records[0][9],
+                           height=records[0][10],
+                           week_end_bed=str(records[0][11]),
+                           week_end_wake=str(records[0][12]),
+                           week_bed=str(records[0][13]),
+                           week_wake=str(records[0][14]))
+
 
 @app.route('/message', methods=['POST'])
 def MessageBox():

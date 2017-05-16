@@ -172,9 +172,14 @@ def MessageBox():
 def meet():
     email = session['Email']
     print('In MeetUp')
-    print(email)
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getMeetUps', (str(email),))
+    val = cursor.fetchall()
     return render_template('meetup2.html',
-                           sessionOwner = email)
+                           sessionOwner = email,
+                           meetUp = val,
+                           )
 
 @app.route('/suggestMeet', methods=['POST'])
 def suggestMeetUp():

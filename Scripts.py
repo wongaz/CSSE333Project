@@ -18,7 +18,6 @@ class Node:
         self.Profile = UserID
         self.score = Value
 
-
 @app.route('/')
 def hello():
     print("Connected!")
@@ -143,7 +142,7 @@ def Home():
         if record[16] != None:
             major_names.append(record[16])
     major_names = ", ".join(major_names)
-    return render_template('matchPostProfile.html',
+    return render_template('profile.html',
                            Username=email,
                            email=email,
                            academic_status=records[0][1],
@@ -164,23 +163,48 @@ def Home():
 
 @app.route('/message', methods=['POST'])
 def MessageBox():
-    pass
+    email = session['Email']
+    print(email)
+    return render_template('conversation.html',
+                           sessionOwner = email)
 
-@app.route('/meetup',methods=['POST'])
-def meetUp():
-    pass
+@app.route('/meetup', methods=['POST'])
+def meet():
+    email = session['Email']
+    print('In MeetUp')
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getMeetUps', (str(email),))
+    val = cursor.fetchall()
+    return render_template('meetup2.html',
+                           sessionOwner = email,
+                           meetUp = val,
+                           )
 
 @app.route('/suggestMeet', methods=['POST'])
 def suggestMeetUp():
+
     pass
 
 @app.route('/returnConversation', methods=['POST'])
 def returnToConversation():
+    email = session['Email']
+    print(email)
+    meet =[]
+    meet.append("c")
+    meet.append("s")
+    return render_template('conversation.html',
+                           sessionOwner=email,
+                           meetUp = meet
+                           )
     pass
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():
-    pass
+    email = session['Email']
+    return render_template('meetup.html',
+                           sessionOwner=email)
+
 
 # @app.route('/matches', methods=['GET'])
 # def matches():
@@ -203,6 +227,7 @@ def postRegister():
     _he = request.form['he']
     _yemail = request.form['yemail']
     _ypass = request.form['ypassword']
+    _name = request.form['name']
     _pacs = request.form['pacs']
     _pgpa = request.form['pgpa']
     _pm = request.form.getlist('pm')
@@ -218,34 +243,7 @@ def postRegister():
     _psx = request.form['psx']
     _phc = request.form['phc']
     _phe = request.form['phe']
-    # print(_ac)
-    # print(_major)
-    # print(_ah)
-    # print(_ch)
-    # print(_vh)
-    # print(_gpa)
-    # print(_hc)
-    # print(_et)
-    # print(_sx)
-    # print(_he)
-    # # Profile -> P
-    # print(_yemail)
-    # print(_ypass)
-    # print(_pacs)
-    # print(_pgpa)
-    # print(_pm)
-    # print(_psh)
-    # print(_pWeekWake)
-    # print(_pWeekBed)
-    # print(_pWeekendWake)
-    # print(_pWeekendBed)
-    # print(_pah)
-    # print(_pch)
-    # print(_pvh)
-    # print(_pet)
-    # print(_psx)
-    # print(_phe)
-    # print(_phc)
+
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()
@@ -279,7 +277,8 @@ def postRegister():
                      _pWeekWake,
                      _pWeekBed,
                      _yemail,
-                     hashedPass,))
+                     hashedPass,
+                     _name,))
     print("Finished Query")
     tuples = cursor.fetchmany(2)
     print(str(tuples))

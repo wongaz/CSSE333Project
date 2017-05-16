@@ -166,12 +166,13 @@ def MessageBox():
     email = session['Email']
     print(email)
     return render_template('conversation.html',
-                           sessionOwner = email
-                           )
+                           sessionOwner = email)
 
-@app.route('/meetup',methods=['POST'])
-def meetUp():
+@app.route('/meetup', methods=['POST'])
+def meet():
     email = session['Email']
+    print('In MeetUp')
+    print(email)
     return render_template('meetup.html',
                            sessionOwner = email)
 

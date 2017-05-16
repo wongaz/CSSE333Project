@@ -191,7 +191,10 @@ def returnToConversation():
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():
-    pass
+    email = session['Email']
+    return render_template('meetup.html',
+                           sessionOwner=email)
+
 
 # @app.route('/matches', methods=['GET'])
 # def matches():

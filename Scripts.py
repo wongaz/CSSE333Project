@@ -190,7 +190,7 @@ def MessageBox():
                             otherUser = otherEmail,
                             )
 
-@app.route('refreshMessages', method =['POST'])
+@app.route('refreshMessages', methods =['POST'])
 def refreshMessage():
     email = session['Email']
     otherEmail = session['otherEmail']

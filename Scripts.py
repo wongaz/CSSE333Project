@@ -113,7 +113,7 @@ def viewMatchedProfiles():
     connection = mysql.connect()
     cursor = connection.cursor()
     email = session['Email']
-    cursor.callproc('getTopMatches', (email,))
+    cursor.callproc('getSuccessfulMatches', (email,))
     AllMatches = cursor.fetchall()
     otherEmail = ""
     for k in range(len(AllMatches)):

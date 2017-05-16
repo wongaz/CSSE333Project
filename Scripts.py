@@ -31,7 +31,7 @@ def viewPostMatches():
     email = session['Email']
     connection = mysql.connect()
     cursor = connection.cursor()
-    cursor.callproc('getSucessfulMatches', (email,))
+    cursor.callproc('getSuccessfulMatches', (email,))
     Alluser = cursor.fetchall()
     AllUsers2 = []
     for k in range(len(Alluser)):

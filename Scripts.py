@@ -185,6 +185,9 @@ def suggestMeetUp():
 def returnToConversation():
     email = session['Email']
     print(email)
+    meet =[]
+    meet.append("c")
+    meet.append("s")
     return render_template('conversation.html',
                            sessionOwner=email,
                            meetUp = [(),()]

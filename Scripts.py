@@ -145,6 +145,7 @@ def Home():
         if record[16] != None:
             major_names.append(record[16])
     major_names = ", ".join(major_names)
+    session.pop('otherEmail', None)
     return render_template('profile.html',
                            Username=email,
                            email=email,
@@ -175,28 +176,30 @@ def sendingMessage():
     ts = datetime.datetime.fromtimestamp(timestamp=time.time()).strftime('%Y-%m-%d %H:%M:%S')
     cursor.callproc('createMessage', (str(email),str(otherEmail),_message,str(ts),))
     connection.commit()
-    return render_template('conversation.html',otherUser = otherEmail,
-                                            sessionOwner=email,
-
-                                            )
+    return refreshMessage
 
 @app.route('/message', methods=['POST'])
 def MessageBox():
     email = session['Email']
     otherEmail = session['otherEmail']
     print(email)
-    return render_template('conversation.html',
-                           sessionOwner = email,
-                            otherUser = otherEmail,
-                            )
+    return refreshMessage
+
 
 @app.route('/refreshMessages', methods = ['POST'])
 def refreshMessage():
     email = session['Email']
     otherEmail = session['otherEmail']
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getMessages',(email,otherEmail,))
+    val = cursor.fetchall()
     return render_template('conversation.html',
                            sessionOwner=email,
-                           otherUser=otherEmail,)
+                           otherUser=otherEmail,
+                           messages = val
+                           )
+
 
 @app.route('/returnConversation', methods=['POST'])
 def returnToConversation():

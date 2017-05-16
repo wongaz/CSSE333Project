@@ -190,7 +190,7 @@ def returnToConversation():
     meet.append("s")
     return render_template('conversation.html',
                            sessionOwner=email,
-                           meetUp = [(),()]
+                           meetUp = meet
                            )
     pass
 

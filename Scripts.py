@@ -172,7 +172,7 @@ def MessageBox():
 @app.route('/meetup',methods=['POST'])
 def meetUp():
     email = session['Email']
-    return render_template('meetUp.html',
+    return render_template('meetup.html',
                            sessionOwner = email)
 
 @app.route('/suggestMeet', methods=['POST'])

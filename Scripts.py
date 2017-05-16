@@ -363,7 +363,7 @@ def Logout():
 def Registration():
     return render_template('newTempReg.html')
 
-@app.route('/UpdatePref', methods=['POST'])
+@app.route('/SetPref', methods=['POST'])
 def SetPref():
     return render_template("preference.html")
 

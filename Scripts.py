@@ -142,7 +142,7 @@ def Home():
         if record[16] != None:
             major_names.append(record[16])
     major_names = ", ".join(major_names)
-    return render_template('matchPostProfile.html',
+    return render_template('profile.html',
                            Username=email,
                            email=email,
                            academic_status=records[0][1],
@@ -171,14 +171,22 @@ def MessageBox():
 
 @app.route('/meetup',methods=['POST'])
 def meetUp():
-    pass
+    email = session['Email']
+    return render_template('meetUp.html',
+                           sessionOwner = email)
 
 @app.route('/suggestMeet', methods=['POST'])
 def suggestMeetUp():
+
     pass
 
 @app.route('/returnConversation', methods=['POST'])
 def returnToConversation():
+    email = session['Email']
+    print(email)
+    return render_template('conversation.html',
+                           sessionOwner=email
+                           )
     pass
 
 @app.route('/refreshMeet', methods=['POST'])

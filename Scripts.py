@@ -178,32 +178,36 @@ def meet():
     val = cursor.fetchall()
     return render_template('meetup2.html',
                            sessionOwner = email,
-                           meetUp = val,
+                           meetUp = val
                            )
 
 @app.route('/suggestMeet', methods=['POST'])
 def suggestMeetUp():
-
+    email = session['Email']
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    _location = request.form['locationInput']
+    _time = request.form['timeInput']
     pass
 
 @app.route('/returnConversation', methods=['POST'])
 def returnToConversation():
     email = session['Email']
     print(email)
-    meet =[]
-    meet.append("c")
-    meet.append("s")
     return render_template('conversation.html',
-                           sessionOwner=email,
-                           meetUp = meet
-                           )
-    pass
+                           sessionOwner=email,)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():
     email = session['Email']
-    return render_template('meetup.html',
-                           sessionOwner=email)
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    cursor.callproc('getMeetUps', (str(email),))
+    val = cursor.fetchall()
+    return render_template('meetup2.html',
+                           sessionOwner=email,
+                           meetUp=val
+                           )
 
 
 # @app.route('/matches', methods=['GET'])

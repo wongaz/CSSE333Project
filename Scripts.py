@@ -18,7 +18,6 @@ class Node:
         self.Profile = UserID
         self.score = Value
 
-
 @app.route('/')
 def hello():
     print("Connected!")
@@ -164,7 +163,10 @@ def Home():
 
 @app.route('/message', methods=['POST'])
 def MessageBox():
-    pass
+    email = session['Email']
+    return render_template('conversation.html',
+                           sessionOwner = email
+                           )
 
 @app.route('/meetup',methods=['POST'])
 def meetUp():
@@ -203,6 +205,7 @@ def postRegister():
     _he = request.form['he']
     _yemail = request.form['yemail']
     _ypass = request.form['ypassword']
+    _name = request.form['name']
     _pacs = request.form['pacs']
     _pgpa = request.form['pgpa']
     _pm = request.form.getlist('pm')
@@ -218,34 +221,7 @@ def postRegister():
     _psx = request.form['psx']
     _phc = request.form['phc']
     _phe = request.form['phe']
-    # print(_ac)
-    # print(_major)
-    # print(_ah)
-    # print(_ch)
-    # print(_vh)
-    # print(_gpa)
-    # print(_hc)
-    # print(_et)
-    # print(_sx)
-    # print(_he)
-    # # Profile -> P
-    # print(_yemail)
-    # print(_ypass)
-    # print(_pacs)
-    # print(_pgpa)
-    # print(_pm)
-    # print(_psh)
-    # print(_pWeekWake)
-    # print(_pWeekBed)
-    # print(_pWeekendWake)
-    # print(_pWeekendBed)
-    # print(_pah)
-    # print(_pch)
-    # print(_pvh)
-    # print(_pet)
-    # print(_psx)
-    # print(_phe)
-    # print(_phc)
+
     hashedPass = (hashlib.sha1((_ypass + _yemail).encode('UTF-8'))).hexdigest()
     connection = mysql.connect()
     cursor = connection.cursor()
@@ -279,7 +255,8 @@ def postRegister():
                      _pWeekWake,
                      _pWeekBed,
                      _yemail,
-                     hashedPass,))
+                     hashedPass,
+                     _name,))
     print("Finished Query")
     tuples = cursor.fetchmany(2)
     print(str(tuples))

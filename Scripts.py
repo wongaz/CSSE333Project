@@ -362,7 +362,7 @@ def suggestMeetUp():
 
     cursor.callproc('getMeetUps', (str(email),))
     val = cursor.fetchall()
-
+    print(val)
     return render_template('meetup2.html',
                            sessionOwner=email,
                            meetUp=val

@@ -365,7 +365,7 @@ def suggestMeetUp():
     print(val)
     return render_template('meetup2.html',
                            sessionOwner=email,
-                           meetUp=val
+                           meetUpInfos=val
                            )
     # cursor.callproc('getMessages', (email, otherEmail,))
     # val = cursor.fetchall()

@@ -343,9 +343,10 @@ def meet():
     cursor = connection.cursor()
     cursor.callproc('getMeetUps', (str(email),))
     val = cursor.fetchall()
+
     return render_template('meetup2.html',
                            sessionOwner = email,
-                           meetUp = val
+                           meetUpInfos=val
                            )
 
 @app.route('/suggestMeet', methods=['POST'])
@@ -355,15 +356,23 @@ def suggestMeetUp():
     connection = mysql.connect()
     cursor = connection.cursor()
     _location = request.form['locationInput']
-    _time = request.form['timeInput']
+    _time = request.form['dayInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
-    cursor.callproc('getMessages', (email, otherEmail,))
+
+    cursor.callproc('getMeetUps', (str(email),))
     val = cursor.fetchall()
-    return render_template('conversation.html',
+    print(val)
+    return render_template('meetup2.html',
                            sessionOwner=email,
-                           otherUser=otherEmail,
-                           messages=val)
+                           meetUpInfos=val
+                           )
+    # cursor.callproc('getMessages', (email, otherEmail,))
+    # val = cursor.fetchall()
+    # return render_template('conversation.html',
+    #                        sessionOwner=email,
+    #                        otherUser=otherEmail,
+    #                        messages=val)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():
@@ -374,7 +383,7 @@ def refreshMeetUp():
     val = cursor.fetchall()
     return render_template('meetup2.html',
                            sessionOwner=email,
-                           meetUp=val
+                           meetUpInfos=val
                            )
 
 @app.route('/postReg', methods=['POST'])

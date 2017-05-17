@@ -343,7 +343,7 @@ def meet():
     cursor = connection.cursor()
     cursor.callproc('getMeetUps', (str(email),))
     val = cursor.fetchall()
-    print(val)
+
     return render_template('meetup2.html',
                            sessionOwner = email,
                            meetUp = val
@@ -359,12 +359,20 @@ def suggestMeetUp():
     _time = request.form['dayInput']
     cursor.callproc('setUpMeetUp', (_location,_time,email,otherEmail))
     connection.commit()
-    cursor.callproc('getMessages', (email, otherEmail,))
+
+    cursor.callproc('getMeetUps', (str(email),))
     val = cursor.fetchall()
-    return render_template('conversation.html',
+
+    return render_template('meetup2.html',
                            sessionOwner=email,
-                           otherUser=otherEmail,
-                           messages=val)
+                           meetUp=val
+                           )
+    # cursor.callproc('getMessages', (email, otherEmail,))
+    # val = cursor.fetchall()
+    # return render_template('conversation.html',
+    #                        sessionOwner=email,
+    #                        otherUser=otherEmail,
+    #                        messages=val)
 
 @app.route('/refreshMeet', methods=['POST'])
 def refreshMeetUp():

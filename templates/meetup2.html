@@ -14,7 +14,7 @@
             <th>Location</th>
             <th>Time</th>
         </tr>
-
+        {% for meetupInfo in meetupInfos %}
         <tr>
             <td>
                 {{meetUp[0]}}
@@ -23,7 +23,7 @@
                 {{meetUp[1]}}
             </td>
         </tr>
-
+        {% endfor %}
 
     </table>
 

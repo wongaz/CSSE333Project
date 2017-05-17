@@ -346,7 +346,7 @@ def meet():
 
     return render_template('meetup2.html',
                            sessionOwner = email,
-                           meetUpInfos=val
+                           meetupInfos=val
                            )
 
 @app.route('/suggestMeet', methods=['POST'])
@@ -365,7 +365,7 @@ def suggestMeetUp():
     print(val)
     return render_template('meetup2.html',
                            sessionOwner=email,
-                           meetUpInfos=val
+                           meetupInfos=val
                            )
     # cursor.callproc('getMessages', (email, otherEmail,))
     # val = cursor.fetchall()
@@ -383,7 +383,7 @@ def refreshMeetUp():
     val = cursor.fetchall()
     return render_template('meetup2.html',
                            sessionOwner=email,
-                           meetUpInfos=val
+                           meetupInfos=val
                            )
 
 @app.route('/postReg', methods=['POST'])

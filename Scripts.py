@@ -20,10 +20,12 @@ class Node:
         self.Profile = UserID
         self.score = Value
 
+
 @app.route('/')
 def hello():
     print("Connected!")
     return render_template("login.html")
+
 
 @app.route('/viewPostMatches' , methods=['POST'])
 def viewPostMatches():
@@ -492,52 +494,85 @@ def Registration():
     return render_template('newTempReg.html')
 
 @app.route('/SetPref', methods=['POST'])
-def SetPref():
-    return render_template("preference.html")
+def SetDesired():
+    return render_template('preference.html')
 
-@app.route('/SavePref', methods=['POST'])
-def SavePref():
+@app.route('/setPro', methods=['POST'])
+def SetPro():
+    return render_template("profileUpdate.html")
+
+@app.route('/updatePro', methods=['POST'])
+def SaveProfile():
     connection = mysql.connect()
     cursor = connection.cursor()
-    cursor.callproc('getProfileInformation', (str('Ldh@redred.com'),))
-    records = cursor.fetchall()
-    major_names = []
-    _emailAtBeg = request.form['']
-    _name = request.form['']
-    _email = request.form['']
-    _academic = request.form['']
-    _major = request.form['']
-    _gpa = request.form['']
-    _studyHabits = request.form['']
-    _alc = request.form['']
-    _cig = request.form['']
-    _vape = request.form['']
-    _hair = request.form['']
-    _end_bed = request.form['']
-    _end_wake = request.form['']
-    _week_bed = request.form['']
-    _week_wake = request.form['']
-    for record in records:
-        if record[16] != None:
-            major_names.append(record[16])
-    major_names = ", ".join(major_names)
-    return render_template('profile.html',
-                           email='Ldh@redred.com',
-                           academic_status=records[0][1],
-                           major=major_names,
-                           gpa=records[0][2],
-                           study_habit=records[0][3],
-                           alc_use=records[0][4],
-                           cig_use=records[0][5],
-                           vape_use=records[0][6],
-                           hair=records[0][7],
-                           ethnicity=records[0][8],
-                           sex=records[0][9],
-                           height=records[0][10],
-                           week_end_bed=str(records[0][11]),
-                           week_end_wake=str(records[0][12]),
-                           week_bed=str(records[0][13]),
-                           week_wake=str(records[0][14]))
+    email = session['Email']
+    _pacs = request.form['acs']
+    _major = request.form['major']
+    _pm = request.form.getlist('pm')
+
+    _pgpa = request.form['gpa']
+    _psh = request.form['psh']
+    _pah = request.form['ah']
+    _pch = request.form['ch']
+    _pvh = request.form['vh']
+    _phc = request.form['hc']
+    _pet = request.form['et']
+    _psx = request.form['sx']
+    _phe = request.form['he']
+    _pWeekWake = request.form['pWeekWakeup']
+    _pWeekBed = request.form['pWeekBedtime']
+    _pWeekendWake = request.form['pWeekendWakeup']
+    _pWeekendBed = request.form['pWeekendBedtime']
+    cursor.callproc('deleteMajor',(email,))
+    if len(_pm)!=0:
+        for k in range(len(_pm)):
+            cursor.callproc('addMajorEmail', (email, _pm[k],))
+
+
+    cursor.callproc('updatePersonalInformation',(email,
+                                                _pacs,
+                                                _pgpa,
+                                                _psh,
+                                                _pah,
+                                                _pch,
+                                                _pvh,
+                                                _phc,
+                                                _pet,
+                                                _psx,
+                                                _phe,
+                                                _pWeekendWake,
+                                                _pWeekendBed,
+                                                _pWeekWake,
+                                                _pWeekBed,))
+
+    return render_template("profileUpdate.html")
+
+
+@app.route('/SavePref', methods=['POST'])
+def SaveDesired():
+    connection = mysql.connect()
+    cursor = connection.cursor()
+    email = session['Email']
+    _academic = request.form['acs']
+    _gpa = request.form['gpa']
+    _alc = request.form['ah']
+    _cig = request.form['ch']
+    _vape = request.form['vh']
+    _hair = request.form['hc']
+    _eth = request.form['et']
+    _sex = request.form['sx']
+    _he = request.form['he']
+    cursor.callproc('updateDesiredProfile',(email,
+                                            _academic,
+                                            _gpa,
+                                            _alc,
+                                            _cig,
+                                            _vape,
+                                            _hair,
+                                            _eth,
+                                            _sex,
+                                            _he,))
+    return render_template("preference.html")
 
 def matching(DesiredAttributes, AllAttributes):
     List = []

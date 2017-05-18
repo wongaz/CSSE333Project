@@ -510,7 +510,7 @@ def SaveProfile():
     _pm = request.form.getlist('pm')
 
     _pgpa = request.form['pgpa']
-    _psh = request.form['ppsh']
+    _psh = request.form['psh']
     _pah = request.form['pah']
     _pch = request.form['pch']
     _pvh = request.form['pvh']
@@ -547,7 +547,7 @@ def SaveProfile():
     return render_template("profileUpdate.html")
 
 
-@app.route('/SavePref', methods=['POST'])
+@app.route('/updatePref', methods=['POST'])
 def SaveDesired():
     connection = mysql.connect()
     cursor = connection.cursor()

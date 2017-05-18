@@ -127,17 +127,17 @@ def matchbatch():
     cursor = connection.cursor()
     cursor.callproc('deleteOldMatches',)
     connection.commit()
-    print('HERE')
+    #print('HERE')
     cursor.execute("SELECT email from People")
     AllEmails= cursor.fetchall()
-    print(AllEmails)
+    #print(AllEmails)
     for j in range(len(AllEmails)):
-        print (j)
+        #print (j)
         currentEmail = AllEmails[j][0]
-        print(currentEmail)
+        #print(currentEmail)
         cursor.callproc('getDesiredProfile', (currentEmail,))
         currentProfile = cursor.fetchall()
-        print(currentProfile)
+        #print(currentProfile)
         if(len(currentProfile)!= 0):
             cursor.callproc('getOtherProfiles', (str(currentEmail),))
             otherProfiles = cursor.fetchall()
@@ -154,4 +154,4 @@ def matchbatch():
 
 
 if __name__ == '__main__':
-    main()
+    matchbatch()

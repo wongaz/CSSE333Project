@@ -544,6 +544,7 @@ def SaveProfile():
                                                 _pWeekWake,
                                                 _pWeekBed,))
 
+    connection.commit()
     return render_template("profileUpdate.html")
 
 
@@ -571,6 +572,7 @@ def SaveDesired():
                                             _eth,
                                             _sex,
                                             _he,))
+    connection.commit()
     return render_template("preference.html")
 
 def matching(DesiredAttributes, AllAttributes):

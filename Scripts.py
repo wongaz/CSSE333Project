@@ -561,7 +561,7 @@ def SaveDesired():
     _eth = request.form['et']
     _sex = request.form['sx']
     _he = request.form['he']
-    cursor.callproc('updateDesiredProfile',(email,
+    cursor.callproc('updateDesiredInformation',(email,
                                             _academic,
                                             _gpa,
                                             _alc,

@@ -1,156 +1,136 @@
 <!DOCTYPE html>
 <html>
-	<head>
-  		<title>Profile</title>
-	</head>
-    
-	<body style="font-family: Georgia Italic; background-color: pink">
+<head>
+    <title>Profile</title>
+</head>
 
-		<p style="color: red; font-size: 40px"><em>Match Preferences</em> (⌐■_■)</p>
+<body style="font-family: Georgia Italic; background-color: pink">
+
+
+    <p style="color: red; font-size: 40px"><em>Update Preferences</em> (⌐■_■)</p>
+
+
+    <form action="/updatePref" method="POST">
+        <p>
+            <fieldset>
+                <legend>Preferred Academic Status</legend>
+
+                <input type="radio" name="acs" value="Freshman" checked> Freshman<br>
+                <input type="radio" name="acs" value="Sohpomore"> Sophomore<br>
+                <input type="radio" name="acs" value="Junior"> Junior<br>
+                <input type="radio" name="acs" value="Senior"> Senior<br>
+                <input type="radio" name="acs" value="Graduate"> Graduate
+
+
+            </fieldset>
+
+        </p>
 
         <p>
-          <fieldset>
-            <legend>Preferred Academic Status</legend>
-              <form>
-				  <input type="radio" name="acs" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="acs" value="Freshman"> Freshman<br>
-                  <input type="radio" name="acs" value="Sohpomore"> Sophomore<br>
-                  <input type="radio" name="acs" value="Junior"> Junior<br>
-                  <input type="radio" name="acs" value="Senior"> Senior<br>
-                  <input type="radio" name="acs" value="Graduate"> Graduate>
-              </form>
-          </fieldset>
+            <fieldset>
+                <legend>Preferred GPA minimum</legend>
+
+                <input type="number" name="gpa" title="0.0-4.0" min="0.0" max="4.0" step="0.1" required>
+
+
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Is In Your Major</legend>
-
-              	  <input type="radio" name="major" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="major" value="Yes"> Yes<br>
-                  <input type="radio" name="major" value="No"> No
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Is In Your Major</legend>
+                <input type="radio" name="major" value=1 checked> Yes<br>
+                <input type="radio" name="major" value=0> No
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Study Habits</legend>
 
-              	  <input type="radio" name="sh" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="sh" value="Morning"> Morning<br>
-                  <input type="radio" name="sh" value="Evening"> Evening<br>
-                  <input type="radio" name="sh" value="Throughout the Day"> Throughout the Day
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Alcohol Use</legend>
+                <input type="radio" name="ah" value=1 checked> Yes<br>
+                <input type="radio" name="ah" value=0> No
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Alcohol Use</legend>
-
-              	  <input type="radio" name="ah" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="ah" value="Yes"> Yes<br>
-                  <input type="radio" name="ah" value="No"> No
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Cigarette Use</legend>
+                <input type="radio" name="ch" value=1 checked> Yes<br>
+                <input type="radio" name="ch" value=0> No
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Cigarette Use</legend>
-
-              	  <input type="radio" name="ch" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="ch" value="Yes"> Yes<br>
-                  <input type="radio" name="ch" value="No"> No
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Vape Use</legend>
+                <input type="radio" name="vh" value=1 checked> Yes<br>
+                <input type="radio" name="vh" value=0> No
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Vape Use</legend>
-
-              	  <input type="radio" name="vh" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="vh" value="Yes"> Yes<br>
-                  <input type="radio" name="vh" value="No"> No
-
-          </fieldset>
-
-        </p>
-
-		<p>
-          <fieldset>
-            <legend>Hair Color</legend>
-
-              	  <input type="radio" name="hc" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="hc" value="Black"> Black<br>
-                  <input type="radio" name="hc" value="Brown"> Brown<br>
-                  <input type="radio" name="hc" value="Blonde"> Blonde<br>
-                  <input type="radio" name="hc" value="Red"> Red<br>
-                  <input type="radio" name="hc" value="White"> White<br>
-                  <input type="radio" name="hc" value="Other"> Other
-
-          </fieldset>
-
-        </p>
-        
-		<p>
-          <fieldset>
-            <legend>Ethnicity</legend>
-
-              	  <input type="radio" name="et" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="et" value="White"> White<br>
-                  <input type="radio" name="et" value="Black"> Black<br>
-                  <input type="radio" name="et" value="Asian"> Asian<br>
-                  <input type="radio" name="et" value="Latin"> Latin<br>
-                  <input type="radio" name="et" value="Other"> Other
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Hair Color</legend>
+                <input type="radio" name="hc" value="Black" checked> Black<br>
+                <input type="radio" name="hc" value="Brown"> Brown<br>
+                <input type="radio" name="hc" value="Blonde"> Blonde<br>
+                <input type="radio" name="hc" value="Red"> Red<br>
+                <input type="radio" name="hc" value="White"> White<br>
+                <input type="radio" name="hc" value="Other"> Other
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Sex</legend>
-
-              	  <input type="radio" name="sx" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="sx" value="Male"> Male<br>
-                  <input type="radio" name="sx" value="Female"> Female
-
-          </fieldset>
+        <p>
+            <fieldset>
+                <legend>Ethnicity</legend>
+                <input type="radio" name="et" value="White" checked> White<br>
+                <input type="radio" name="et" value="Black"> Black<br>
+                <input type="radio" name="et" value="Asian"> Asian<br>
+                <input type="radio" name="et" value="Latin"> Latin<br>
+                <input type="radio" name="et" value="Other"> Other
+            </fieldset>
 
         </p>
 
-		<p>
-          <fieldset>
-            <legend>Height</legend>
+        <p>
+            <fieldset>
+                <legend>Sex</legend>
+                <input type="radio" name="sx" value="Male" checked> Male<br>
+                <input type="radio" name="sx" value="Female"> Female
+            </fieldset>
 
-              	  <input type="radio" name="he" value="No Preference" checked> No Preference<br>
-                  <input type="radio" name="he" value="Tall"> Tall<br>
-                  <input type="radio" name="he" value="Average"> Average<br>
-                  <input type="radio" name="he" value="Short"> Short
+        </p>
 
-          </fieldset>
-	<form action="/SavePref", method = 'POST'>
-		<input id="subpref" type="submit" value = 'Submit Preferences'>
+        <p>
+            <fieldset>
+                <legend>Height</legend>
+                <input type="radio" name="he" value=77 checked> Tall<br>
+                <input type="radio" name="he" value=70> Average<br>
+                <input type="radio" name="he" value=60> Short
+            </fieldset>
+
+        </p>
+        <form action="/SavePref" , method='POST'>
+            <input id="subpref" type="submit" value='Submit Preferences'>
         </form>
 
-    <form action="/otherHome" method="POST">
-        <input id="returnHome2" type="submit" value="Return Home" />
-    </form>
+        <form action="/otherHome" method="POST">
+            <input id="returnHome2" type="submit" value="Return Home" />
+        </form>
 
 
-    <form action="/Logout" method="POST">
-        <input id="logout" type="submit" value="log out" />
-    </form>
+        <form action="/Logout" method="POST">
+            <input id="logout" type="submit" value="log out" />
+        </form>
 
-	</p>
-	</body>
+        </p>
+</body>
 </html>
 

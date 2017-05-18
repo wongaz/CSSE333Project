@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+
+<body style="font-family: Georgia Italic; background-color: pink">
+
+
+    <p style="color: red; font-size: 40px"><em>Update Profile</em> (⌐■_■) </p>
+    <form action="/updatePro" method="POST">
+        <p>
+            <fieldset>
+                <legend>GPA</legend>
+
+                <input type="number" name="pgpa" title="0.0-4.0" min="0" max="4" step="0.1">
+
+
+            </fieldset>
+
+        </p>
+
+
+
+        <p>
+            <fieldset>
+                <legend>Academic Status</legend>
+
+                <input type="radio" name="pacs" value="Freshman" checked> Freshman<br>
+                <input type="radio" name="pacs" value="Sohpomore"> Sophomore<br>
+                <input type="radio" name="pacs" value="Junior"> Junior<br>
+                <input type="radio" name="pacs" value="Senior"> Senior<br>
+                <input type="radio" name="pacs" value="Graduate"> Graduate
+
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Major</legend>
+
+                <div id="majors" style="height:150;width:200px;overflow:auto">
+                    <input type="checkbox" id="m1" name="pm" value='Computer Science'>Computer Science<br>
+                    <input type="checkbox" id="m2" name="pm" value='Electrical Engineering'>Electrical Engineering<br>
+                    <input type="checkbox" id="m3" name="pm" value='Optical Engineering'>Optical Engineering<br>
+                    <input type="checkbox" id="m3" name="pm" value='Mechanical Engineering'>Mechanical Engineering<br>
+                    <input type="checkbox" id="m5" name="pm" value='Civil Engineering'>Civil Engineering<br>
+                    <input type="checkbox" id="m6" name="pm" value='Computer Engineering'>Computer Engineering<br>
+                    <input type="checkbox" id="m7" name="pm" value='Math'>Math<br>
+                    <input type="checkbox" id="m8" name="pm" value='Chemistry'>Chemistry<br>
+                    <input type="checkbox" id="m9" name="pm" value='Biomedical Engineering'>Biomedical Engineering<br>
+                    <input type="checkbox" id="m10" name="pm">Physics
+
+                </div>
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Study Habit</legend>
+
+                <input type="radio" name="psh" value="Morning" checked> Morning<br>
+                <input type="radio" name="psh" value="Evening"> Evening<br>
+                <input type="radio" name="psh" value="Throughout the Day"> Throughout the Day
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Sleep Schedule</legend>
+                Week Wakeup:<br>
+                <select name="pWeekWakeup">
+
+                    <option value="00:00:00" selected="selected">00:00:00</option>
+                    <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    <option value="23:00:00">23:00:00</option>
+                    <option value="24:00:00">24:00:00</option>
+
+                </select>
+                <br><br>
+
+                Week Bedtime:<br>
+                <select name="pWeekBedtime">
+
+                    <option value="00:00:00" selected="selected">00:00:00</option>
+                    <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    <option value="23:00:00">23:00:00</option>
+                    <option value="24:00:00">24:00:00</option>
+
+                </select>
+                <br><br>
+
+                Weekend Wakeup:<br>
+                <select name="pWeekendWakeup">
+
+                    <option value="00:00:00" selected="selected">00:00:00</option>
+                    <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    <option value="23:00:00">23:00:00</option>
+                    <option value="24:00:00">24:00:00</option>
+
+                </select>
+                <br><br>
+
+                Weekwns Bedtime:<br>
+                <select name="pWeekendBedtime">
+
+                    <option value="00:00:00" selected="selected">00:00:00</option>
+                    <option value="01:00:00">01:00:00</option>
+                    <option value="02:00:00">02:00:00</option>
+                    <option value="03:00:00">03:00:00</option>
+                    <option value="04:00:00">04:00:00</option>
+                    <option value="05:00:00">05:00:00</option>
+                    <option value="06:00:00">06:00:00</option>
+                    <option value="07:00:00">07:00:00</option>
+                    <option value="08:00:00">08:00:00</option>
+                    <option value="09:00:00">09:00:00</option>
+                    <option value="10:00:00">10:00:00</option>
+                    <option value="11:00:00">11:00:00</option>
+                    <option value="12:00:00">12:00:00</option>
+                    <option value="13:00:00">13:00:00</option>
+                    <option value="14:00:00">14:00:00</option>
+                    <option value="15:00:00">15:00:00</option>
+                    <option value="16:00:00">16:00:00</option>
+                    <option value="17:00:00">17:00:00</option>
+                    <option value="18:00:00">18:00:00</option>
+                    <option value="19:00:00">19:00:00</option>
+                    <option value="20:00:00">20:00:00</option>
+                    <option value="21:00:00">21:00:00</option>
+                    <option value="22:00:00">22:00:00</option>
+                    <option value="23:00:00">23:00:00</option>
+                    <option value="24:00:00">24:00:00</option>
+
+                </select>
+
+            </fieldset>
+
+        <p>
+            <fieldset>
+                <legend>Alcohol Use</legend>
+
+                <input type="radio" name="pah" value=1 checked> Yes<br>
+                <input type="radio" name="pah" value=0> No
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Cigarette Use</legend>
+
+                <input type="radio" name="pch" value=1 checked> Yes<br>
+                <input type="radio" name="pch" value=0> No
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Vape Use</legend>
+
+                <input type="radio" name="pvh" value=1 checked> Yes<br>
+                <input type="radio" name="pvh" value=0> No
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Hair Color</legend>
+
+                <input type="radio" name="phc" value="Black" checked> Black<br>
+                <input type="radio" name="phc" value="Brown"> Brown<br>
+                <input type="radio" name="phc" value="Blonde"> Blonde<br>
+                <input type="radio" name="phc" value="Red"> Red<br>
+                <input type="radio" name="phc" value="White"> White<br>
+                <input type="radio" name="phc" value="Other"> Other
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Ethnicity</legend>
+
+                <input type="radio" name="pet" value="White" checked> White<br>
+                <input type="radio" name="pet" value="Black"> Black<br>
+                <input type="radio" name="pet" value="Asian"> Asian<br>
+                <input type="radio" name="pet" value="Latin"> Latin<br>
+                <input type="radio" name="pet" value="Other"> Other
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Sex</legend>
+
+                <input type="radio" name="psx" value="Male" checked> Male<br>
+                <input type="radio" name="psx" value="Female"> Female
+
+            </fieldset>
+
+        </p>
+
+        <p>
+            <fieldset>
+                <legend>Height (inches) </legend>
+
+                <input type="number" name="phe" min="40" max="108" required><br>
+        </p>
+        <p>
+
+            </fieldset>
+
+            <input id="updatePro" type="submit" value="Update">
+    </form>
+    <form action="/home" method="POST">
+        <input id="returnHome" type="submit" value="Return Home" />
+    </form>
+    <form action="/Logout" method="POST">
+        <input id="logout" type="submit" value="log out" />
+    </form>
+    </p>
+</body>
+</html>

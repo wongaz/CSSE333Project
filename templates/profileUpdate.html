@@ -1,141 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        function validateForm() {
-            var x = document.forms["myForm"]["fname"].value;
-            if (x == "") {
-                alert("Name must be filled out");
-                return false;
-            }
-
-        }
-    </script>
-
     <title>Profile</title>
 </head>
 
 <body style="font-family: Georgia Italic; background-color: pink">
 
 
-    <p style="color: red; font-size: 40px"><em>Match Preferences</em> (⌐■_■)</p>
-
-
-    <form action="/postReg" method="POST">
-        <p>
-            <fieldset>
-                <legend>Preferred Academic Status</legend>
-
-                <input type="radio" name="acs" value="Freshman" checked> Freshman<br>
-                <input type="radio" name="acs" value="Sohpomore"> Sophomore<br>
-                <input type="radio" name="acs" value="Junior"> Junior<br>
-                <input type="radio" name="acs" value="Senior"> Senior<br>
-                <input type="radio" name="acs" value="Graduate"> Graduate
-
-
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Preferred GPA minimum</legend>
-
-                <input type="number" name="gpa" title="0.0-4.0" min="0.0" max="4.0" step="0.1" required>
-
-
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Is In Your Major</legend>
-                <input type="radio" name="major" value=1 checked> Yes<br>
-                <input type="radio" name="major" value=0> No
-            </fieldset>
-
-        </p>
-
-
-        <p>
-            <fieldset>
-                <legend>Alcohol Use</legend>
-                <input type="radio" name="ah" value=1 checked> Yes<br>
-                <input type="radio" name="ah" value=0> No
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Cigarette Use</legend>
-                <input type="radio" name="ch" value=1 checked> Yes<br>
-                <input type="radio" name="ch" value=0> No
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Vape Use</legend>
-                <input type="radio" name="vh" value=1 checked> Yes<br>
-                <input type="radio" name="vh" value=0> No
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Hair Color</legend>
-                <input type="radio" name="hc" value="Black" checked> Black<br>
-                <input type="radio" name="hc" value="Brown"> Brown<br>
-                <input type="radio" name="hc" value="Blonde"> Blonde<br>
-                <input type="radio" name="hc" value="Red"> Red<br>
-                <input type="radio" name="hc" value="White"> White<br>
-                <input type="radio" name="hc" value="Other"> Other
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Ethnicity</legend>
-                <input type="radio" name="et" value="White" checked> White<br>
-                <input type="radio" name="et" value="Black"> Black<br>
-                <input type="radio" name="et" value="Asian"> Asian<br>
-                <input type="radio" name="et" value="Latin"> Latin<br>
-                <input type="radio" name="et" value="Other"> Other
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Sex</legend>
-                <input type="radio" name="sx" value="Male" checked> Male<br>
-                <input type="radio" name="sx" value="Female"> Female
-            </fieldset>
-
-        </p>
-
-        <p>
-            <fieldset>
-                <legend>Height</legend>
-                <input type="radio" name="he" value=77 checked> Tall<br>
-                <input type="radio" name="he" value=70> Average<br>
-                <input type="radio" name="he" value=60> Short
-            </fieldset>
-
-        </p>
-        <p style="color: red; font-size: 40px"><em>Set Profile</em> (⌐■_■) </p>
-
-        Name: <input type="text" pattern="^[a-zA-Z ]+$" name="fname" title="English name no special characters" required>
-
-        Email: <input type="text" name="yemail" title="Your email. This will be your login username" required>
-
-        Password: <input type="password" name="ypassword" title="Your password." required>
-
+    <p style="color: red; font-size: 40px"><em>Update Profile</em> (⌐■_■) </p>
+    <form action="/updatePro" method="POST">
         <p>
             <fieldset>
                 <legend>GPA</legend>
@@ -413,7 +286,13 @@
 
             </fieldset>
 
-            <input id="subpref" type="submit" value="Submit">
+            <input id="updatePro" type="submit" value="Update">
+    </form>
+    <form action="/home" method="POST">
+        <input id="returnHome" type="submit" value="Return Home" />
+    </form>
+    <form action="/Logout" method="POST">
+        <input id="logout" type="submit" value="log out" />
     </form>
     </p>
 </body>

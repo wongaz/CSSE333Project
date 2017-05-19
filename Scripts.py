@@ -5,6 +5,12 @@ from flaskext.mysql import MySQL
 import datetime
 import time
 
+f = open('authenticate.txt', 'r')
+var = f.read()
+print(var)
+var2 = var.split(',')
+for k in range(len(var2)):
+    print(var2[k])
 app = Flask(__name__)
 app.secret_key = 'any random string'
 mysql = MySQL()
@@ -79,7 +85,7 @@ def authenticate():
 
     if dbPass is not None:
         if hashedPass == dbPass[0]:
-            print("Authentication Sucessful")
+            print("SSAuthentication Sucessful")
             session['Email'] = emailForm
             # Alex do this VVVV
             cursor.callproc('getProfileInformation', (str(email),))

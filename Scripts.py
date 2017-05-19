@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import hashlib
 from flask import Flask, render_template, request, session
 from flaskext.mysql import MySQL

@@ -9,17 +9,16 @@ f = open('authenticate.txt', 'r')
 var = f.read()
 print(var)
 var2 = var.split(',')
-for k in range(len(var2)):
-    print(var2[k])
+
 app = Flask(__name__)
 app.secret_key = 'any random string'
 mysql = MySQL()
 
 # MySQL configurations;
-app.config['MYSQL_DATABASE_USER'] = 'guest'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
-app.config['MYSQL_DATABASE_DB'] = 'majormatch'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = var2[0]
+app.config['MYSQL_DATABASE_PASSWORD'] = var2[1]
+app.config['MYSQL_DATABASE_DB'] = var2[2]
+app.config['MYSQL_DATABASE_HOST'] = var2[3]
 mysql.init_app(app)
 
 class Node:

@@ -5,7 +5,7 @@ import datetime
 import time
 
 f = open('authenticate.txt', 'r')
-var = f.read()
+var = f.read().strip()
 print(var)
 var2 = var.split(',')
 
